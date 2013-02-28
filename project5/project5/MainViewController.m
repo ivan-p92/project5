@@ -18,12 +18,27 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    self.currentProgress.text = @"------ABCDEFG---";
+    self.guessedLetters.text = @"Letters Played:\n ";
+    self.guessesLeft.text = @"Guesses Left:\n ";
+    [self.textField becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)dissmissKeyboard:(id)sender
+{
+    [self.textField resignFirstResponder];
+}
+
+- (IBAction)showKeyboard:(id)sender
+{
+    [self.textField becomeFirstResponder];
 }
 
 #pragma mark - Flipside View
