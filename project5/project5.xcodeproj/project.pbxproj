@@ -29,6 +29,8 @@
 		2C4F523516DF9DDA00577161 /* EvilGameplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C4F523016DF9DD900577161 /* EvilGameplay.m */; };
 		2C4F523616DF9DDA00577161 /* small.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C4F523216DF9DDA00577161 /* small.plist */; };
 		2C4F523716DF9DDA00577161 /* words.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C4F523316DF9DDA00577161 /* words.plist */; };
+		2C4F523A16DF9E7600577161 /* GoodGameplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C4F523916DF9E7600577161 /* GoodGameplay.m */; };
+		2C4F523E16DFA19F00577161 /* History.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C4F523D16DFA19F00577161 /* History.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +76,10 @@
 		2C4F523116DF9DD900577161 /* GameplayDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameplayDelegate.h; sourceTree = "<group>"; };
 		2C4F523216DF9DDA00577161 /* small.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = small.plist; sourceTree = "<group>"; };
 		2C4F523316DF9DDA00577161 /* words.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = words.plist; sourceTree = "<group>"; };
+		2C4F523816DF9E7600577161 /* GoodGameplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodGameplay.h; sourceTree = "<group>"; };
+		2C4F523916DF9E7600577161 /* GoodGameplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodGameplay.m; sourceTree = "<group>"; };
+		2C4F523C16DFA19F00577161 /* History.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = History.h; sourceTree = "<group>"; };
+		2C4F523D16DFA19F00577161 /* History.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = History.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,21 +139,15 @@
 		2C4F51F216DF90B000577161 /* project5 */ = {
 			isa = PBXGroup;
 			children = (
-				2C4F522D16DF9DD900577161 /* EquivalenceClass.h */,
-				2C4F522E16DF9DD900577161 /* EquivalenceClass.m */,
-				2C4F522F16DF9DD900577161 /* EvilGameplay.h */,
-				2C4F523016DF9DD900577161 /* EvilGameplay.m */,
-				2C4F523116DF9DD900577161 /* GameplayDelegate.h */,
-				2C4F523216DF9DDA00577161 /* small.plist */,
-				2C4F523316DF9DDA00577161 /* words.plist */,
 				2C4F51FB16DF90B000577161 /* AppDelegate.h */,
 				2C4F51FC16DF90B000577161 /* AppDelegate.m */,
-				2C4F520416DF90B000577161 /* MainViewController.h */,
-				2C4F520516DF90B000577161 /* MainViewController.m */,
 				2C4F520716DF90B000577161 /* FlipsideViewController.h */,
 				2C4F520816DF90B000577161 /* FlipsideViewController.m */,
-				2C4F520A16DF90B000577161 /* MainViewController.xib */,
 				2C4F520D16DF90B000577161 /* FlipsideViewController.xib */,
+				2C4F520416DF90B000577161 /* MainViewController.h */,
+				2C4F520516DF90B000577161 /* MainViewController.m */,
+				2C4F520A16DF90B000577161 /* MainViewController.xib */,
+				2C4F523B16DF9E8300577161 /* Hangman Files */,
 				2C4F51F316DF90B000577161 /* Supporting Files */,
 			);
 			path = project5;
@@ -184,6 +184,24 @@
 				2C4F521F16DF90B000577161 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2C4F523B16DF9E8300577161 /* Hangman Files */ = {
+			isa = PBXGroup;
+			children = (
+				2C4F522D16DF9DD900577161 /* EquivalenceClass.h */,
+				2C4F522E16DF9DD900577161 /* EquivalenceClass.m */,
+				2C4F522F16DF9DD900577161 /* EvilGameplay.h */,
+				2C4F523016DF9DD900577161 /* EvilGameplay.m */,
+				2C4F523116DF9DD900577161 /* GameplayDelegate.h */,
+				2C4F523816DF9E7600577161 /* GoodGameplay.h */,
+				2C4F523916DF9E7600577161 /* GoodGameplay.m */,
+				2C4F523C16DFA19F00577161 /* History.h */,
+				2C4F523D16DFA19F00577161 /* History.m */,
+				2C4F523216DF9DDA00577161 /* small.plist */,
+				2C4F523316DF9DDA00577161 /* words.plist */,
+			);
+			name = "Hangman Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -305,6 +323,8 @@
 				2C4F520916DF90B000577161 /* FlipsideViewController.m in Sources */,
 				2C4F523416DF9DDA00577161 /* EquivalenceClass.m in Sources */,
 				2C4F523516DF9DDA00577161 /* EvilGameplay.m in Sources */,
+				2C4F523A16DF9E7600577161 /* GoodGameplay.m in Sources */,
+				2C4F523E16DFA19F00577161 /* History.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
