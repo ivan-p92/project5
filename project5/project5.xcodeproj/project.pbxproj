@@ -25,6 +25,10 @@
 		2C4F521916DF90B000577161 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C4F51EE16DF90B000577161 /* Foundation.framework */; };
 		2C4F522116DF90B000577161 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2C4F521F16DF90B000577161 /* InfoPlist.strings */; };
 		2C4F522416DF90B000577161 /* project5Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C4F522316DF90B000577161 /* project5Tests.m */; };
+		2C4F523416DF9DDA00577161 /* EquivalenceClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C4F522E16DF9DD900577161 /* EquivalenceClass.m */; };
+		2C4F523516DF9DDA00577161 /* EvilGameplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C4F523016DF9DD900577161 /* EvilGameplay.m */; };
+		2C4F523616DF9DDA00577161 /* small.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C4F523216DF9DDA00577161 /* small.plist */; };
+		2C4F523716DF9DDA00577161 /* words.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C4F523316DF9DDA00577161 /* words.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +67,13 @@
 		2C4F522016DF90B000577161 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2C4F522216DF90B000577161 /* project5Tests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = project5Tests.h; sourceTree = "<group>"; };
 		2C4F522316DF90B000577161 /* project5Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = project5Tests.m; sourceTree = "<group>"; };
+		2C4F522D16DF9DD900577161 /* EquivalenceClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EquivalenceClass.h; sourceTree = "<group>"; };
+		2C4F522E16DF9DD900577161 /* EquivalenceClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EquivalenceClass.m; sourceTree = "<group>"; };
+		2C4F522F16DF9DD900577161 /* EvilGameplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvilGameplay.h; sourceTree = "<group>"; };
+		2C4F523016DF9DD900577161 /* EvilGameplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvilGameplay.m; sourceTree = "<group>"; };
+		2C4F523116DF9DD900577161 /* GameplayDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameplayDelegate.h; sourceTree = "<group>"; };
+		2C4F523216DF9DDA00577161 /* small.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = small.plist; sourceTree = "<group>"; };
+		2C4F523316DF9DDA00577161 /* words.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = words.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +133,13 @@
 		2C4F51F216DF90B000577161 /* project5 */ = {
 			isa = PBXGroup;
 			children = (
+				2C4F522D16DF9DD900577161 /* EquivalenceClass.h */,
+				2C4F522E16DF9DD900577161 /* EquivalenceClass.m */,
+				2C4F522F16DF9DD900577161 /* EvilGameplay.h */,
+				2C4F523016DF9DD900577161 /* EvilGameplay.m */,
+				2C4F523116DF9DD900577161 /* GameplayDelegate.h */,
+				2C4F523216DF9DDA00577161 /* small.plist */,
+				2C4F523316DF9DDA00577161 /* words.plist */,
 				2C4F51FB16DF90B000577161 /* AppDelegate.h */,
 				2C4F51FC16DF90B000577161 /* AppDelegate.m */,
 				2C4F520416DF90B000577161 /* MainViewController.h */,
@@ -245,6 +263,8 @@
 				2C4F520316DF90B000577161 /* Default-568h@2x.png in Resources */,
 				2C4F520C16DF90B000577161 /* MainViewController.xib in Resources */,
 				2C4F520F16DF90B000577161 /* FlipsideViewController.xib in Resources */,
+				2C4F523616DF9DDA00577161 /* small.plist in Resources */,
+				2C4F523716DF9DDA00577161 /* words.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,6 +303,8 @@
 				2C4F51FD16DF90B000577161 /* AppDelegate.m in Sources */,
 				2C4F520616DF90B000577161 /* MainViewController.m in Sources */,
 				2C4F520916DF90B000577161 /* FlipsideViewController.m in Sources */,
+				2C4F523416DF9DDA00577161 /* EquivalenceClass.m in Sources */,
+				2C4F523516DF9DDA00577161 /* EvilGameplay.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
