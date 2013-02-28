@@ -11,7 +11,7 @@
 @class History;
 
 
-@interface MainViewController : UIViewController <FlipsideViewControllerDelegate>
+@interface MainViewController : UIViewController <FlipsideViewControllerDelegate, UITextFieldDelegate>
 
 // UI properties
 @property (weak, nonatomic) IBOutlet UILabel *currentProgress;
