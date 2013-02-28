@@ -33,4 +33,21 @@
     [self.delegate flipsideViewControllerDidFinish:self];
 }
 
+- (IBAction)evilModeChanged:(UISwitch *)sender
+{
+    // change evilmode setting
+}
+
+- (IBAction)wordLengthChanged:(UISlider *)sender
+{
+    NSUInteger wordLength = lroundf(sender.value);
+    self.wordLength.text = [NSString stringWithFormat:@"%d", wordLength];
+}
+
+- (IBAction)guessesChanged:(UISlider *)sender
+{
+    NSUInteger guesses = lround(sender.value);
+    self.guesses.text = [NSString stringWithFormat:@"%d", guesses];
+}
+
 @end
