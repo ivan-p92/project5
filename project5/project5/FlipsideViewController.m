@@ -17,7 +17,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+	
+    // set values according to settings
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [self.evilMode setOn:[defaults boolForKey:@"evilMode"]];
+    
+    NSUInteger wordLength = [defaults integerForKey:@"wordLength"];
+    [self.wordLengthSlider setValue:wordLength];
+    self.wordLength.text = [NSString stringWithFormat:@"%d", wordLength];
+    
+    NSUInteger guesses = [defaults integerForKey:@"guesses"];
+    [self.guessesSlider setValue:guesses];
+    self.guesses.text = [NSString stringWithFormat:@"%d", guesses];
 }
 
 - (void)didReceiveMemoryWarning
@@ -36,6 +48,10 @@
 - (IBAction)evilModeChanged:(UISwitch *)sender
 {
     // change evilmode setting
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL evilMode = sender.isOn;
+    [defaults setBool:evilMode forKey:@"evilMode"];
+    NSLog(@"Evil mode saved: %@", evilMode?@"YES":@"NO");
 }
 
 - (IBAction)wordLengthChanged:(UISlider *)sender
@@ -50,4 +66,26 @@
     self.guesses.text = [NSString stringWithFormat:@"%d", guesses];
 }
 
+- (IBAction)saveWordLength:(UISlider *)sender
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSUInteger wordLength = lroundf(sender.value);
+    [defaults setInteger:wordLength forKey:@"wordLength"];
+    NSLog(@"New word length saved: %d", wordLength);
+}
+
+- (IBAction)saveGuesses:(UISlider *)sender
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSUInteger guesses = lroundf(sender.value);
+    [defaults setInteger:guesses forKey:@"guesses"];
+    NSLog(@"New guesses saved: %d", guesses);
+}
+
+- (void)viewDidUnload {
+    [self setEvilMode:nil];
+    [self setWordLengthSlider:nil];
+    [self setGuessesSlider:nil];
+    [super viewDidUnload];
+}
 @end

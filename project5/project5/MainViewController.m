@@ -18,6 +18,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    [self loadSettings];
     [self initUI];
     [self.textField becomeFirstResponder];
     NSLog(@"View did load");
@@ -62,6 +63,27 @@
 
 #pragma mark - Game methods
 
+- (void)loadSettings
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    self.wordLength = [defaults integerForKey:@"wordLength"];
+    if (self.wordLength == 0) {
+        NSLog(@"No existing user settings. Creating them.");
+        self.wordLength = 7;
+        self.guesses = 6;
+        self.evilMode = YES;
+        [defaults setInteger:self.wordLength forKey:@"wordLength"];
+        [defaults setInteger:self.guesses forKey:@"guesses"];
+        [defaults setBool:self.evilMode forKey:@"evilMode"];
+        [defaults synchronize];
+    }
+    else {
+        self.guesses = [defaults integerForKey:@"guesses"];
+        self.evilMode = [defaults boolForKey:@"evilMode"];
+        NSLog(@"Settings:\nWord length: %d\nGuesses: %d\nEvil mode: %@", self.wordLength, self.guesses, self.evilMode?@"YES":@"NO");
+    }
+}
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     NSLog(@"In replace string");
@@ -86,6 +108,9 @@
 - (void)flipsideViewControllerDidFinish:(FlipsideViewController *)controller
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+
+    // reload settings
+    [self loadSettings];
 }
 
 - (IBAction)showInfo:(id)sender

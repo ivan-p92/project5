@@ -45,6 +45,7 @@
 						<int key="NSvFlags">290</int>
 						<string key="NSFrameSize">{320, 44}</string>
 						<reference key="NSSuperview" ref="249263867"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="291465312"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -73,6 +74,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{208, 84}, {94, 27}}</string>
 						<reference key="NSSuperview" ref="249263867"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="981619158"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -86,6 +88,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{20, 80}, {179, 36}}</string>
 						<reference key="NSSuperview" ref="249263867"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="189061564"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -119,6 +122,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{20, 124}, {179, 36}}</string>
 						<reference key="NSSuperview" ref="249263867"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="591931984"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -139,6 +143,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{257, 168}, {43, 36}}</string>
 						<reference key="NSSuperview" ref="249263867"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="103378700"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -159,6 +164,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{18, 175}, {204, 23}}</string>
 						<reference key="NSSuperview" ref="249263867"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="271390596"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -174,6 +180,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{20, 212}, {179, 36}}</string>
 						<reference key="NSSuperview" ref="249263867"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="595889176"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -194,7 +201,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{257, 256}, {43, 36}}</string>
 						<reference key="NSSuperview" ref="249263867"/>
-						<reference key="NSNextKeyView"/>
+						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -214,6 +221,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{18, 263}, {204, 23}}</string>
 						<reference key="NSSuperview" ref="249263867"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="678874697"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -227,6 +235,7 @@
 				</array>
 				<string key="NSFrame">{{0, 20}, {320, 460}}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="871675769"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
@@ -283,6 +292,30 @@
 					<int key="connectionID">150</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">evilMode</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="189061564"/>
+					</object>
+					<int key="connectionID">157</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">wordLengthSlider</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="591931984"/>
+					</object>
+					<int key="connectionID">158</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">guessesSlider</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="595889176"/>
+					</object>
+					<int key="connectionID">159</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">done:</string>
 						<reference key="source" ref="854562692"/>
@@ -310,12 +343,48 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">saveWordLength:</string>
+						<reference key="source" ref="591931984"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">153</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">saveWordLength:</string>
+						<reference key="source" ref="591931984"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">8</int>
+					</object>
+					<int key="connectionID">154</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">guessesChanged:</string>
 						<reference key="source" ref="595889176"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">13</int>
 					</object>
 					<int key="connectionID">152</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">saveGuesses:</string>
+						<reference key="source" ref="595889176"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">155</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">saveGuesses:</string>
+						<reference key="source" ref="595889176"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">8</int>
+					</object>
+					<int key="connectionID">156</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -445,9 +514,83 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">152</int>
+			<int key="maxID">159</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">FlipsideViewController</string>
+					<string key="superclassName">UIViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="done:">id</string>
+						<string key="evilModeChanged:">UISwitch</string>
+						<string key="guessesChanged:">UISlider</string>
+						<string key="saveGuesses:">UISlider</string>
+						<string key="saveWordLength:">UISlider</string>
+						<string key="wordLengthChanged:">UISlider</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="done:">
+							<string key="name">done:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="evilModeChanged:">
+							<string key="name">evilModeChanged:</string>
+							<string key="candidateClassName">UISwitch</string>
+						</object>
+						<object class="IBActionInfo" key="guessesChanged:">
+							<string key="name">guessesChanged:</string>
+							<string key="candidateClassName">UISlider</string>
+						</object>
+						<object class="IBActionInfo" key="saveGuesses:">
+							<string key="name">saveGuesses:</string>
+							<string key="candidateClassName">UISlider</string>
+						</object>
+						<object class="IBActionInfo" key="saveWordLength:">
+							<string key="name">saveWordLength:</string>
+							<string key="candidateClassName">UISlider</string>
+						</object>
+						<object class="IBActionInfo" key="wordLengthChanged:">
+							<string key="name">wordLengthChanged:</string>
+							<string key="candidateClassName">UISlider</string>
+						</object>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="evilMode">UISwitch</string>
+						<string key="guesses">UILabel</string>
+						<string key="guessesSlider">UISlider</string>
+						<string key="wordLength">UILabel</string>
+						<string key="wordLengthSlider">UISlider</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="evilMode">
+							<string key="name">evilMode</string>
+							<string key="candidateClassName">UISwitch</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="guesses">
+							<string key="name">guesses</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="guessesSlider">
+							<string key="name">guessesSlider</string>
+							<string key="candidateClassName">UISlider</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="wordLength">
+							<string key="name">wordLength</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="wordLengthSlider">
+							<string key="name">wordLengthSlider</string>
+							<string key="candidateClassName">UISlider</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/FlipsideViewController.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">

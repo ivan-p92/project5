@@ -13,19 +13,26 @@
 
 @interface MainViewController : UIViewController <FlipsideViewControllerDelegate, UITextFieldDelegate>
 
-// UI properties
+#pragma mark - UI properties
 @property (weak, nonatomic) IBOutlet UILabel *currentProgress;
 @property (weak, nonatomic) IBOutlet UILabel *guessedLetters;
 @property (weak, nonatomic) IBOutlet UILabel *guessesLeft;
 @property (weak, nonatomic) IBOutlet UILabel *alerts;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 
-// game properties
+#pragma mark - Game properties
 @property (strong, nonatomic) id <GameplayDelegate> game;
 @property (strong, nonatomic) History *highscores;
+@property (nonatomic) BOOL evilMode;
+@property (nonatomic) NSUInteger wordLength;
+@property (nonatomic) NSUInteger guesses;
 
+#pragma mark - UI methods
 - (IBAction)showInfo:(id)sender;
 - (IBAction)dissmissKeyboard:(id)sender;
 - (IBAction)showKeyboard:(id)sender;
+
+#pragma mark - Game methods
+- (void)loadSettings;
 
 @end
