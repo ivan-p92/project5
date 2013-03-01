@@ -19,6 +19,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *guessesLeft;
 @property (weak, nonatomic) IBOutlet UILabel *alerts;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
+@property (weak, nonatomic) IBOutlet UIButton *keyboardButton;
+@property (weak, nonatomic) IBOutlet UIButton *startNewGameButton;
+
 
 #pragma mark - Game properties
 @property (strong, nonatomic) id <GameplayDelegate> game;
@@ -31,8 +34,11 @@
 - (IBAction)showInfo:(id)sender;
 - (IBAction)dissmissKeyboard:(id)sender;
 - (IBAction)showKeyboard:(id)sender;
+- (IBAction)startNewGameButtonPressed:(UIButton *)sender;
+- (void)updateViewBeforeNewGame;
 
 #pragma mark - Game methods
 - (void)loadSettings;
+- (void)newGame;
 
 @end

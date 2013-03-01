@@ -51,17 +51,13 @@
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIBarStyle">1</int>
-						<object class="NSColor" key="IBUITintColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MCAwIDAAA</bytes>
-						</object>
 						<array key="IBUIItems">
 							<object class="IBUINavigationItem" id="553200710">
 								<reference key="IBUINavigationBar" ref="871675769"/>
 								<string key="IBUITitle">Settings</string>
 								<object class="IBUIBarButtonItem" key="IBUIRightBarButtonItem" id="854562692">
 									<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-									<int key="IBUIStyle">1</int>
+									<int key="IBUIStyle">2</int>
 									<reference key="IBUINavigationItem" ref="553200710"/>
 									<int key="IBUISystemItemIdentifier">0</int>
 								</object>

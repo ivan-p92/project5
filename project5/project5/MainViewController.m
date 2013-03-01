@@ -7,6 +7,10 @@
 //
 
 #import "MainViewController.h"
+#import "EvilGameplay.h"
+#import "GoodGameplay.h"
+#import "GameplayDelegate.h"
+#import "History.h"
 
 @interface MainViewController ()
 
@@ -20,8 +24,12 @@
 	// Do any additional setup after loading the view, typically from a nib.
     [self loadSettings];
     [self initUI];
-    [self.textField becomeFirstResponder];
     NSLog(@"View did load");
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self newGame];
 }
 
 - (void)didReceiveMemoryWarning
@@ -35,9 +43,9 @@
 
 - (void) initUI
 {
-    self.currentProgress.text = @"------ABCDEFG---";
+    self.currentProgress.text = @"------abcdefg---";
     self.guessedLetters.text = @"Letters Played:\n ";
-    self.guessesLeft.text = @"Guesses Left:\n ";
+    self.guessesLeft.text = [NSString stringWithFormat:@"Guesses Left:\n%d of %d", self.guesses, self.guesses];
     self.textField.delegate = self;
 }
 
@@ -49,6 +57,22 @@
 - (IBAction)showKeyboard:(id)sender
 {
     [self.textField becomeFirstResponder];
+}
+
+- (IBAction)startNewGameButtonPressed:(UIButton *)sender
+{
+    [self updateViewBeforeNewGame];
+    
+    // wait a bit so that view updates
+    [self performSelector:@selector(newGame) withObject:self afterDelay:0.5];
+}
+
+- (void)updateViewBeforeNewGame
+{
+    NSLog(@"Updating view before game loading..");
+    [self.keyboardButton setEnabled:NO];
+    [self.startNewGameButton setEnabled:NO];
+    self.alerts.text = @"Loading Game...";
 }
 
 /**
@@ -82,6 +106,31 @@
         self.evilMode = [defaults boolForKey:@"evilMode"];
         NSLog(@"Settings:\nWord length: %d\nGuesses: %d\nEvil mode: %@", self.wordLength, self.guesses, self.evilMode?@"YES":@"NO");
     }
+}
+
+/**
+ * New game with loaded settings
+ * Settings don't have to be loaded again
+ */
+- (void)newGame
+{
+    NSLog(@"New Game is being started..");
+    NSLog(@"%@",[self.textField isFirstResponder]?@"YES":@"NO");
+    // disable UI buttons and resign keyboard
+    
+    
+    // load the words
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"words" ofType:@"plist"];
+    NSArray *words = [NSArray arrayWithContentsOfFile:path];
+//    NSLog(@"Words:\n%@", words);
+//    self.game = [EvilGameplay alloc];
+//    
+//    [self.game initGameWithWords: andGuesses:]
+    
+    self.alerts.text = @"Guess the Word!";
+    [self.textField becomeFirstResponder];
+    [self.keyboardButton setEnabled:YES];
+    [self.startNewGameButton setEnabled:YES];
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -121,4 +170,9 @@
     [self presentViewController:controller animated:YES completion:nil];
 }
 
+- (void)viewDidUnload {
+    [self setKeyboardButton:nil];
+    [self setStartNewGameButton:nil];
+    [super viewDidUnload];
+}
 @end
