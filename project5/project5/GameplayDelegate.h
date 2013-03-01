@@ -29,6 +29,9 @@
 // whether player won the game once it is finished
 @property (nonatomic) BOOL playerWonGame;
 
+// message to show after each letter
+@property (strong, nonatomic) NSString *alert;
+
 
 // start new game with given list of words (or word) and number of guesses
 - (id)initGameWithWords:(NSArray*) words andGuesses:(int) guesses;

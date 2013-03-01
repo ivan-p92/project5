@@ -19,11 +19,13 @@
 @synthesize currentGuess = _currentGuess;
 @synthesize playerWonGame = _playerWonGame;
 @synthesize guessedLetters = _guessedLetters;
+@synthesize alert = _alert;
 
 - (id)initGameWithWords:(NSArray *)words andGuesses:(int)guesses
 {
+    NSLog(@"Evil game init.");
     self = [super init];
-    NSLog(@"In init");
+    
     self.classes = [EquivalenceClass new];
     self.words = words;
     self.guesses = guesses;
@@ -69,9 +71,11 @@
     if (![bestClass isEqual: @"0-"]) {
         NSArray *locations = [bestClass componentsSeparatedByString:@"-"];
         self.unknownLettersLeft -= [locations count] - 1;
+        self.alert = @"Good choice!";
     }
     // if letter wasn't found, increment guesses
     else {
+        self.alert = @"Wrong choice...";
         self.currentGuess++;
     }
     if (self.unknownLettersLeft == 0) {

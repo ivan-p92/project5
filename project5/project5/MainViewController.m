@@ -45,7 +45,7 @@
 {
     self.currentProgress.text = @"hangman";
     self.guessedLetters.text = @"Letters played:\n ";
-    self.guessesLeft.text = [NSString stringWithFormat:@"Guesses left:\n%d of %d", self.guesses, self.guesses];
+    self.guessesLeft.text = [NSString stringWithFormat:@"Wrong guesses left:\n%d of %d", self.guesses, self.guesses];
     self.textField.delegate = self;
 }
 
@@ -75,11 +75,11 @@
     self.alerts.text = @"Loading new game...";
 }
 
-- (void)updateLabels
+- (void)updateLabelsWithAlert:(NSString *)alert
 {
     self.currentProgress.text = [self.game.currentProgress lowercaseString];
-    self.alerts.text = @"Guess the word!";
-    self.guessesLeft.text = [NSString stringWithFormat:@"Guesses left:\n%d of %d", self.guesses - self.game.currentGuess, self.guesses];
+    self.alerts.text = alert;
+    self.guessesLeft.text = [NSString stringWithFormat:@"Wrong guesses left:\n%d of %d", self.guesses - self.game.currentGuess, self.guesses];
     
     if ([self.game.guessedLetters isEqualToString:@""]) {
         self.guessedLetters.text = @"Letters played:\n ";
@@ -143,12 +143,17 @@
     }
     
     // make new evil or good game
-    self.game = [EvilGameplay alloc];
+    if (self.evilMode) {
+        self.game = [EvilGameplay alloc];
+    }
+    else {
+        self.game = [GoodGameplay alloc];
+    }
     
     self.game = [self.game initGameWithWords:words andGuesses:self.guesses];
     
     // set labels
-    [self updateLabels];
+    [self updateLabelsWithAlert:@"Guess the word!"];
     
     [self.textField becomeFirstResponder];
     [self.keyboardButton setEnabled:YES];
@@ -171,7 +176,7 @@
         BOOL notYetFinished = [self.game playRoundForLetter:letter];
         NSLog(@"Word in mind: %@", self.game.currentWord);
         if (notYetFinished) {
-            [self updateLabels];
+            [self updateLabelsWithAlert:self.game.alert];
         }
         else {
             [self endGame];
@@ -190,6 +195,7 @@
 {
     [self.keyboardButton setEnabled:NO];
     [self.textField resignFirstResponder];
+    self.guessesLeft.text = @"Wrong guesses left:\nnone";
     
     if (self.game.playerWonGame) {
         self.currentProgress.text = [self.game.currentProgress lowercaseString];
