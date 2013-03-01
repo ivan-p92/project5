@@ -87,15 +87,15 @@
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
 						<int key="IBUITextAlignment">1</int>
-						<object class="IBUIFontDescription" key="IBUIFontDescription" id="346060952">
+						<object class="IBUIFontDescription" key="IBUIFontDescription" id="712939248">
 							<string key="name">Noteworthy-Light</string>
 							<string key="family">Noteworthy</string>
 							<int key="traits">0</int>
-							<double key="pointSize">20</double>
+							<double key="pointSize">18</double>
 						</object>
-						<object class="NSFont" key="IBUIFont" id="385894972">
+						<object class="NSFont" key="IBUIFont" id="757748946">
 							<string key="NSName">Noteworthy-Light</string>
-							<double key="NSSize">20</double>
+							<double key="NSSize">18</double>
 							<int key="NSfFlags">16</int>
 						</object>
 						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
@@ -113,14 +113,14 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">Letters Played:</string>
+						<string key="IBUIText">Letters played:</string>
 						<reference key="IBUITextColor" ref="1060159749"/>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
 						<int key="IBUINumberOfLines">2</int>
 						<int key="IBUITextAlignment">1</int>
-						<reference key="IBUIFontDescription" ref="346060952"/>
-						<reference key="IBUIFont" ref="385894972"/>
+						<reference key="IBUIFontDescription" ref="712939248"/>
+						<reference key="IBUIFont" ref="757748946"/>
 						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 						<double key="preferredMaxLayoutWidth">280</double>
 					</object>
@@ -137,21 +137,21 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">Guesses Left:</string>
+						<string key="IBUIText">Guesses left:</string>
 						<reference key="IBUITextColor" ref="1060159749"/>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
 						<int key="IBUINumberOfLines">2</int>
 						<int key="IBUITextAlignment">1</int>
-						<reference key="IBUIFontDescription" ref="346060952"/>
-						<reference key="IBUIFont" ref="385894972"/>
+						<reference key="IBUIFontDescription" ref="712939248"/>
+						<reference key="IBUIFont" ref="757748946"/>
 						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 						<double key="preferredMaxLayoutWidth">280</double>
 					</object>
 					<object class="IBUILabel" id="147273830">
 						<reference key="NSNextResponder" ref="883825266"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 211}, {280, 30}}</string>
+						<string key="NSFrame">{{20, 211}, {280, 34}}</string>
 						<reference key="NSSuperview" ref="883825266"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="261748687"/>
@@ -161,7 +161,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">Loading Game...</string>
+						<string key="IBUIText">Loading game...</string>
 						<object class="NSColor" key="IBUITextColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MSAwIDAAA</bytes>
@@ -169,8 +169,8 @@
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
 						<int key="IBUITextAlignment">1</int>
-						<reference key="IBUIFontDescription" ref="346060952"/>
-						<reference key="IBUIFont" ref="385894972"/>
+						<reference key="IBUIFontDescription" ref="712939248"/>
+						<reference key="IBUIFont" ref="757748946"/>
 						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 					</object>
 					<object class="IBUITextField" id="328657005">
@@ -179,7 +179,6 @@
 						<string key="NSFrame">{{8, 418}, {97, 30}}</string>
 						<reference key="NSSuperview" ref="883825266"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -216,7 +215,7 @@
 						<string key="NSFrame">{{85, 279}, {150, 44}}</string>
 						<reference key="NSSuperview" ref="883825266"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="624070528"/>
+						<reference key="NSNextKeyView" ref="452895157"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -225,7 +224,7 @@
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<int key="IBUIButtonType">1</int>
 						<string key="IBUINormalTitle">Show Keyboard</string>
-						<object class="NSColor" key="IBUIHighlightedTitleColor" id="108411517">
+						<object class="NSColor" key="IBUIHighlightedTitleColor" id="641780597">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MQA</bytes>
 						</object>
@@ -233,14 +232,23 @@
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
-						<object class="NSColor" key="IBUINormalTitleShadowColor" id="978109772">
+						<object class="NSColor" key="IBUINormalTitleShadowColor" id="666100362">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MC41AA</bytes>
 						</object>
-						<reference key="IBUIFontDescription" ref="346060952"/>
-						<reference key="IBUIFont" ref="385894972"/>
+						<object class="IBUIFontDescription" key="IBUIFontDescription" id="346060952">
+							<string key="name">Noteworthy-Light</string>
+							<string key="family">Noteworthy</string>
+							<int key="traits">0</int>
+							<double key="pointSize">20</double>
+						</object>
+						<object class="NSFont" key="IBUIFont" id="1014471698">
+							<string key="NSName">Noteworthy-Light</string>
+							<double key="NSSize">20</double>
+							<int key="NSfFlags">16</int>
+						</object>
 					</object>
-					<object class="IBUIButton" id="624070528">
+					<object class="IBUIButton" id="452895157">
 						<reference key="NSNextResponder" ref="883825266"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{85, 330}, {150, 44}}</string>
@@ -255,14 +263,14 @@
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<int key="IBUIButtonType">1</int>
 						<string key="IBUINormalTitle">New Game</string>
-						<reference key="IBUIHighlightedTitleColor" ref="108411517"/>
+						<reference key="IBUIHighlightedTitleColor" ref="641780597"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
-						<reference key="IBUINormalTitleShadowColor" ref="978109772"/>
+						<reference key="IBUINormalTitleShadowColor" ref="666100362"/>
 						<reference key="IBUIFontDescription" ref="346060952"/>
-						<reference key="IBUIFont" ref="385894972"/>
+						<reference key="IBUIFont" ref="1014471698"/>
 					</object>
 				</array>
 				<string key="NSFrame">{{0, 20}, {320, 460}}</string>
@@ -357,7 +365,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">startNewGameButton</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="624070528"/>
+						<reference key="destination" ref="452895157"/>
 					</object>
 					<int key="connectionID">223</int>
 				</object>
@@ -399,7 +407,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">startNewGameButtonPressed:</string>
-						<reference key="source" ref="624070528"/>
+						<reference key="source" ref="452895157"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
@@ -433,10 +441,10 @@
 							<reference ref="840497221"/>
 							<reference ref="367181843"/>
 							<reference ref="147273830"/>
-							<reference ref="686159419"/>
 							<reference ref="328657005"/>
 							<reference ref="261748687"/>
-							<reference ref="624070528"/>
+							<reference ref="452895157"/>
+							<reference ref="686159419"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -500,7 +508,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">221</int>
-						<reference key="object" ref="624070528"/>
+						<reference key="object" ref="452895157"/>
 						<reference key="parent" ref="883825266"/>
 					</object>
 				</array>

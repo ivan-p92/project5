@@ -36,9 +36,11 @@
 - (IBAction)showKeyboard:(id)sender;
 - (IBAction)startNewGameButtonPressed:(UIButton *)sender;
 - (void)updateViewBeforeNewGame;
+- (void)updateLabels;
 
 #pragma mark - Game methods
 - (void)loadSettings;
 - (void)newGame;
+- (void)endGame;
 
 @end

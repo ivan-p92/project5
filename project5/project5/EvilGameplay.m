@@ -18,6 +18,7 @@
 @synthesize guesses = _guesses;
 @synthesize currentGuess = _currentGuess;
 @synthesize playerWonGame = _playerWonGame;
+@synthesize guessedLetters = _guessedLetters;
 
 - (id)initGameWithWords:(NSArray *)words andGuesses:(int)guesses
 {
@@ -28,6 +29,7 @@
     self.guesses = guesses;
     self.currentGuess = 0;
     self.unknownLettersLeft = [[self.words objectAtIndex:0] length];
+    self.guessedLetters = [NSMutableString stringWithString:@""];
     
     int randomWordIndex = arc4random() % [self.words count];
     self.currentWord = (NSString*) [self.words objectAtIndex:randomWordIndex];
@@ -38,13 +40,15 @@
         [self.currentProgress appendString:@"-"];
     }
     NSLog(@"Word: %@", self.currentWord);
-    NSLog(@"StartString: %@", self.currentProgress);
+//    NSLog(@"StartString: %@", self.currentProgress);
     
     return self;
 }
 
 - (BOOL)playRoundForLetter:(NSString *)letter
 {
+    [self.guessedLetters appendString:letter];
+    
     for (NSString *word in self.words) {
         [self.classes addWordToClass:word forLetter:letter];
     }
@@ -54,7 +58,7 @@
     
     self.words = [result objectForKey:@"newWords"];
     NSString *bestClass = [result objectForKey:@"largestClass"];
-    NSLog(@"New words: %@", self.words);
+//    NSLog(@"New words: %@", self.words);
     
     int randomWordIndex = arc4random() % [self.words count];
     self.currentWord = (NSString*) [self.words objectAtIndex:randomWordIndex];

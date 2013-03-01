@@ -43,9 +43,9 @@
 
 - (void) initUI
 {
-    self.currentProgress.text = @"------abcdefg---";
-    self.guessedLetters.text = @"Letters Played:\n ";
-    self.guessesLeft.text = [NSString stringWithFormat:@"Guesses Left:\n%d of %d", self.guesses, self.guesses];
+    self.currentProgress.text = @"hangman";
+    self.guessedLetters.text = @"Letters played:\n ";
+    self.guessesLeft.text = [NSString stringWithFormat:@"Guesses left:\n%d of %d", self.guesses, self.guesses];
     self.textField.delegate = self;
 }
 
@@ -72,7 +72,21 @@
     NSLog(@"Updating view before game loading..");
     [self.keyboardButton setEnabled:NO];
     [self.startNewGameButton setEnabled:NO];
-    self.alerts.text = @"Loading Game...";
+    self.alerts.text = @"Loading new game...";
+}
+
+- (void)updateLabels
+{
+    self.currentProgress.text = [self.game.currentProgress lowercaseString];
+    self.alerts.text = @"Guess the word!";
+    self.guessesLeft.text = [NSString stringWithFormat:@"Guesses left:\n%d of %d", self.guesses - self.game.currentGuess, self.guesses];
+    
+    if ([self.game.guessedLetters isEqualToString:@""]) {
+        self.guessedLetters.text = @"Letters played:\n ";
+    }
+    else {
+        self.guessedLetters.text = [NSString stringWithFormat:@"Letters played:\n%@", [self.game.guessedLetters lowercaseString]];
+    }
 }
 
 /**
@@ -115,19 +129,27 @@
 - (void)newGame
 {
     NSLog(@"New Game is being started..");
-    NSLog(@"%@",[self.textField isFirstResponder]?@"YES":@"NO");
-    // disable UI buttons and resign keyboard
-    
     
     // load the words
     NSString *path = [[NSBundle mainBundle] pathForResource:@"words" ofType:@"plist"];
-    NSArray *words = [NSArray arrayWithContentsOfFile:path];
-//    NSLog(@"Words:\n%@", words);
-//    self.game = [EvilGameplay alloc];
-//    
-//    [self.game initGameWithWords: andGuesses:]
+    NSArray *allWords = [NSArray arrayWithContentsOfFile:path];
     
-    self.alerts.text = @"Guess the Word!";
+    NSMutableArray *words = [[NSMutableArray alloc] init];
+    
+    for (int index = 0; index < [allWords count]; index++) {
+        if ([[allWords objectAtIndex:index] length] == self.wordLength) {
+            [words addObject:[allWords objectAtIndex:index]];
+        }
+    }
+    
+    // make new evil or good game
+    self.game = [EvilGameplay alloc];
+    
+    self.game = [self.game initGameWithWords:words andGuesses:self.guesses];
+    
+    // set labels
+    [self updateLabels];
+    
     [self.textField becomeFirstResponder];
     [self.keyboardButton setEnabled:YES];
     [self.startNewGameButton setEnabled:YES];
@@ -135,20 +157,48 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    NSLog(@"In replace string");
     NSString *letter = [string uppercaseString];
      
     // now check whether it is a letter
     NSRange location = [letter rangeOfCharacterFromSet:[NSCharacterSet uppercaseLetterCharacterSet]];
     if (location.location == NSNotFound) {
         NSLog(@"Invalid character!");
-    } else {
-        NSLog(@"Play round will be called with: %@", letter);
-        // TO-DO: call playRoundForLetter method on game
+        self.alerts.text = @"Invalid character!";
     }
-    
+    else if ([self.game.guessedLetters rangeOfString:letter].location == NSNotFound){
+        NSLog(@"Play round will be called with: %@", letter);
+        
+        BOOL notYetFinished = [self.game playRoundForLetter:letter];
+        NSLog(@"Word in mind: %@", self.game.currentWord);
+        if (notYetFinished) {
+            [self updateLabels];
+        }
+        else {
+            [self endGame];
+        }
+    }
+    else {
+        NSLog(@"Letter already played...");
+        self.alerts.text = @"You already played this letter!";
+    }
+
     // never change contents of text field
     return NO;
+}
+
+- (void)endGame
+{
+    [self.keyboardButton setEnabled:NO];
+    [self.textField resignFirstResponder];
+    
+    if (self.game.playerWonGame) {
+        self.currentProgress.text = [self.game.currentProgress lowercaseString];
+        self.alerts.text = @"Congratulations, you won!";
+    }
+    else {
+        self.currentProgress.text = [self.game.currentWord lowercaseString];
+        self.alerts.text = @"Unfortunately, you lost..";
+    }
 }
 
 
