@@ -14,9 +14,20 @@
 
 @interface MainViewController ()
 
+@property (assign, nonatomic) BOOL mainViewDidAppearAfterFreshLaunch;
+
 @end
 
 @implementation MainViewController
+
+#pragma mark - Init related methods
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self.mainViewDidAppearAfterFreshLaunch = YES;
+    return self;
+}
 
 - (void)viewDidLoad
 {
@@ -29,7 +40,10 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [self newGame];
+    if (self.mainViewDidAppearAfterFreshLaunch) {
+        [self newGame];
+        self.mainViewDidAppearAfterFreshLaunch = NO;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -142,6 +156,7 @@
         }
     }
     
+    allWords = nil;
     // make new evil or good game
     if (self.evilMode) {
         self.game = [EvilGameplay alloc];
