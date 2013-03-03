@@ -40,9 +40,11 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    // Start new game, but not if view appeared after switching back from flipside
+    // TODO: actually restore previous game if any
     if (self.mainViewDidAppearAfterFreshLaunch) {
-        [self newGame];
         self.mainViewDidAppearAfterFreshLaunch = NO;
+        [self newGame];
     }
 }
 
@@ -78,7 +80,7 @@
     [self updateViewBeforeNewGame];
     
     // wait a bit so that view updates
-    [self performSelector:@selector(newGame) withObject:self afterDelay:0.5];
+    [self performSelector:@selector(newGame) withObject:self afterDelay:0.1];
 }
 
 - (void)updateViewBeforeNewGame
@@ -96,6 +98,7 @@
     self.guessesLeft.text = [NSString stringWithFormat:@"Wrong guesses left:\n%d of %d", self.guesses - self.game.currentGuess, self.guesses];
     
     if ([self.game.guessedLetters isEqualToString:@""]) {
+        // If the user didn't guess any letters, add a whitespace after newline
         self.guessedLetters.text = @"Letters played:\n ";
     }
     else {
@@ -103,10 +106,8 @@
     }
 }
 
-/**
- * If not implemented, return key is considered invalid character
- * due to textfield:shouldChangeCharactersInRange:replacementString:
- */
+// If not implemented, return key is considered invalid character
+// due to textfield:shouldChangeCharactersInRange:replacementString:
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     return  YES;
@@ -119,6 +120,9 @@
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     self.wordLength = [defaults integerForKey:@"wordLength"];
+    
+    // integerForKey returns 0 if no setting exists, so in that case
+    // they are created
     if (self.wordLength == 0) {
         NSLog(@"No existing user settings. Creating them.");
         self.wordLength = 7;
@@ -136,10 +140,8 @@
     }
 }
 
-/**
- * New game with loaded settings
- * Settings don't have to be loaded again
- */
+// New game with loaded settings
+// Settings don't have to be loaded again
 - (void)newGame
 {
     NSLog(@"New Game is being started..");
@@ -150,6 +152,7 @@
     
     NSMutableArray *words = [[NSMutableArray alloc] init];
     
+    // only take words of desired length
     for (int index = 0; index < [allWords count]; index++) {
         if ([[allWords objectAtIndex:index] length] == self.wordLength) {
             [words addObject:[allWords objectAtIndex:index]];
@@ -157,6 +160,7 @@
     }
     
     allWords = nil;
+    
     // make new evil or good game
     if (self.evilMode) {
         self.game = [EvilGameplay alloc];
@@ -175,12 +179,17 @@
     [self.startNewGameButton setEnabled:YES];
 }
 
+// Called whenever user pressed key on keyboard
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     NSString *letter = [string uppercaseString];
      
     // now check whether it is a letter
     NSRange location = [letter rangeOfCharacterFromSet:[NSCharacterSet uppercaseLetterCharacterSet]];
+    
+    // If not a letter, show message
+    // Else if not already played, play round
+    // Else alert player that letter has already been played
     if (location.location == NSNotFound) {
         NSLog(@"Invalid character!");
         self.alerts.text = @"Invalid character!";
@@ -188,9 +197,9 @@
     else if ([self.game.guessedLetters rangeOfString:letter].location == NSNotFound){
         NSLog(@"Play round will be called with: %@", letter);
         
-        BOOL notYetFinished = [self.game playRoundForLetter:letter];
+        BOOL gameNotYetOver = [self.game playRoundForLetter:letter];
         NSLog(@"Word in mind: %@", self.game.currentWord);
-        if (notYetFinished) {
+        if (gameNotYetOver) {
             [self updateLabelsWithAlert:self.game.alert];
         }
         else {
@@ -202,7 +211,7 @@
         self.alerts.text = @"You already played this letter!";
     }
 
-    // never change contents of text field
+    // never change content of text field
     return NO;
 }
 
@@ -210,14 +219,14 @@
 {
     [self.keyboardButton setEnabled:NO];
     [self.textField resignFirstResponder];
-    self.guessesLeft.text = @"Wrong guesses left:\nnone";
-    
+     
     if (self.game.playerWonGame) {
         self.currentProgress.text = [self.game.currentProgress lowercaseString];
         self.alerts.text = @"Congratulations, you won!";
     }
     else {
         self.currentProgress.text = [self.game.currentWord lowercaseString];
+        self.guessesLeft.text = @"Wrong guesses left:\nnone";
         self.alerts.text = @"Unfortunately, you lost..";
     }
 }

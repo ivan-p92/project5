@@ -18,7 +18,7 @@
 {
     [super viewDidLoad];
 	
-    // set values according to settings
+    // Set values according to settings
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     [self.evilMode setOn:[defaults boolForKey:@"evilMode"]];
@@ -42,43 +42,51 @@
 
 - (IBAction)done:(id)sender
 {
+    // Return to main view
     [self.delegate flipsideViewControllerDidFinish:self];
 }
 
 - (IBAction)evilModeChanged:(UISwitch *)sender
 {
-    // change evilmode setting
+    // Change evilmode setting
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     BOOL evilMode = sender.isOn;
     [defaults setBool:evilMode forKey:@"evilMode"];
+    [defaults synchronize];
     NSLog(@"Evil mode saved: %@", evilMode?@"YES":@"NO");
 }
 
 - (IBAction)wordLengthChanged:(UISlider *)sender
 {
+    // Update label with current value
     NSUInteger wordLength = lroundf(sender.value);
     self.wordLength.text = [NSString stringWithFormat:@"%d", wordLength];
 }
 
 - (IBAction)guessesChanged:(UISlider *)sender
 {
+    // Update label with current value
     NSUInteger guesses = lround(sender.value);
     self.guesses.text = [NSString stringWithFormat:@"%d", guesses];
 }
 
 - (IBAction)saveWordLength:(UISlider *)sender
 {
+    // Get and save new word length
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSUInteger wordLength = lroundf(sender.value);
     [defaults setInteger:wordLength forKey:@"wordLength"];
+    [defaults synchronize];
     NSLog(@"New word length saved: %d", wordLength);
 }
 
 - (IBAction)saveGuesses:(UISlider *)sender
 {
+    // Get and save new number of allowed wrong guesses
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSUInteger guesses = lroundf(sender.value);
     [defaults setInteger:guesses forKey:@"guesses"];
+    [defaults synchronize];
     NSLog(@"New guesses saved: %d", guesses);
 }
 
