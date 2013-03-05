@@ -21,6 +21,13 @@
 @synthesize guessedLetters = _guessedLetters;
 @synthesize alert = _alert;
 
+- (id)init
+{
+    self = [super init];
+    NSArray *words = [NSArray arrayWithObject:@"FOO"];
+    return [self initGameWithWords:words andGuesses:2];
+}
+
 - (id)initGameWithWords:(NSArray *)words andGuesses:(int)guesses
 {
     NSLog(@"Evil game init.");

@@ -20,6 +20,14 @@
 @synthesize playerWonGame = _playerWonGame;
 @synthesize alert = _alert;
 
+- (id)init
+{
+    self = [super init];
+    NSArray *words = [NSArray arrayWithObject:@"FOO"];
+    return [self initGameWithWords:words andGuesses:2];
+}
+
+
 - (id)initGameWithWords:(NSArray *)words andGuesses:(int)guesses
 {
     NSLog(@"Good game init.");
