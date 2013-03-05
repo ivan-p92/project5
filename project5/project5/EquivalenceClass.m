@@ -13,7 +13,7 @@
 - (id)init
 {
     self = [super init];
-    self.classes = [NSMutableDictionary new];
+    self.classes = [[NSMutableDictionary alloc] init];
     return self;
 }
 
@@ -111,7 +111,7 @@
     };
     
     // IMPORTANT: resets classes dictionary
-    self.classes = [NSMutableDictionary new];
+    self.classes = [[NSMutableDictionary alloc] init];
     
     return result;
 }

@@ -8,10 +8,12 @@
 
 #import "project5Tests.h"
 #import "EvilGameplay.h"
+#import "EquivalenceClass.h"
 
 @interface project5Tests ()
 
 @property EvilGameplay *evilGame;
+@property EquivalenceClass *equivalenceClass;
 
 @end
 
@@ -22,7 +24,6 @@
     [super setUp];
     
     // Set-up code here.
-    self.evilGame = [EvilGameplay alloc];
 }
 
 - (void)tearDown
@@ -34,6 +35,8 @@
 
 - (void)testEvilGame
 {
+    self.evilGame = [EvilGameplay alloc];
+    
     NSArray *words = [NSArray arrayWithObjects:
                       @"BEAR",
                       @"BOAR",
@@ -128,6 +131,55 @@
     STAssertFalse([self.evilGame playRoundForLetter:@"Y"], @"Game is over, playRoundForLetter should return NO");
     STAssertFalse(self.evilGame.playerWonGame, @"Player should have lost");
     STAssertEquals(2, self.evilGame.currentGuess, @"Current number of wrong guesses doesn't match expected value");
+}
+
+- (void) testEquivalenceClass
+{
+    // After initialization, the |classes| dictionary should not be nil
+    self.equivalenceClass = [[EquivalenceClass alloc] init];
+    STAssertNotNil(self.equivalenceClass.classes, @"|classes| dictionary should not be nil");
+    
+    // First, the method that determines the equivalence class for a given
+    // word and letter will be tested
+    NSString *class;
+    
+    // The equivalence class for BANANA should be "2-4-6-"
+    class = [self.equivalenceClass equivalenceClassForWord:@"BANANA" andLetter:@"A"];
+    STAssertTrue([class isEqualToString:@"2-4-6-"], @"Equivalence class for BANANA and A should be 2-4-6-");
+    
+    // When the letter isn't found, the class should be "0-"
+    class = [self.equivalenceClass equivalenceClassForWord:@"BANANA" andLetter:@"X"];
+    STAssertTrue([class isEqualToString:@"0-"], @"Equivalence class for BANANA and X should be 0-");
+    
+    
+    // A dictionary is made to be compared to the one created by
+    // EquivalenceClass
+    NSMutableDictionary *classes = [[NSMutableDictionary alloc] init];
+    NSArray *bananaArray = [NSArray arrayWithObject:@"BANANA"];
+    NSArray *bearTearArray = [NSArray arrayWithObjects:@"BEAR",@"TEAR", nil];
+    NSArray *beerArray = [NSArray arrayWithObject:@"BEER"];
+    [classes setObject:bananaArray forKey:@"0-"];
+    [classes setObject:bearTearArray forKey:@"2-"];
+    [classes setObject:beerArray forKey:@"2-3-"];
+    
+    // With the following calls to the EquivalenceClass object,
+    // the same dictionary should be obtained
+    [self.equivalenceClass addWordToClass:@"BANANA" forLetter:@"E"];
+    [self.equivalenceClass addWordToClass:@"BEAR" forLetter:@"E"];
+    [self.equivalenceClass addWordToClass:@"TEAR" forLetter:@"E"];
+    [self.equivalenceClass addWordToClass:@"BEER" forLetter:@"E"];
+    
+    // Equivalence check
+    STAssertTrue([classes isEqualToDictionary:self.equivalenceClass.classes], @"Dictionary of equivalence classes doesn't match expected dictionary");
+    
+    // Final check: check whether largest equivalence class is 2-
+    // and corresponding words BEAR and TEAR
+    NSDictionary *largestClass = [self.equivalenceClass largestClassAndIndexes];
+    STAssertTrue([[largestClass objectForKey:@"largestClass"] isEqual:@"2-"], @"Largest equivalence class should be 2-");
+    STAssertTrue([[largestClass objectForKey:@"newWords"] isEqualToArray:bearTearArray], @"Words belonging to largest class should be BEAR and TEAR");
+    
+    // For more complex checks (in case of ties and such) it is easier
+    // to test in testEvilGame
 }
 
 @end
