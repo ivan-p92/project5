@@ -29,6 +29,9 @@
     
     // Instantiate high scores, they are loaded/created automatically
     self.highscores = [[History alloc] init];
+    
+    // reset high scores
+    [self.highscores resetHighScores];
     return self;
 }
 
@@ -226,6 +229,7 @@
     if (self.game.playerWonGame) {
         self.currentProgress.text = [self.game.currentProgress lowercaseString];
         self.alerts.text = @"Congratulations, you won!";
+        [self.highscores calculateAndSaveScoreWithWord:self.game.currentWord andGuesses:self.game.currentGuess];
     }
     else {
         self.currentProgress.text = [self.game.currentWord lowercaseString];

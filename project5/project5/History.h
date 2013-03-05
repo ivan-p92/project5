@@ -10,7 +10,11 @@
 
 @interface History : NSObject
 
-@property (strong, nonatomic) NSMutableDictionary *highScores;
+// first score of |scores| is lowest score and each object
+// in |words| and |guesses| corresponds to a score
+@property (strong, nonatomic) NSMutableArray *scores;
+@property (strong, nonatomic) NSMutableArray *words;
+@property (strong, nonatomic) NSMutableArray *guesses;
 
 // loads high scores from highscores.plist in /Documents
 - (void)loadHighScores;
@@ -22,6 +26,9 @@
 - (void)calculateAndSaveScoreWithWord:(NSString *)word andGuesses:(NSUInteger)guesses;
 
 // Used by calculateAndSaveScoreWithWord to update highscores.plist
-- (void)updateHighScoresWithScore:(NSUInteger)score andInfo:(NSString *)info;
+- (void)updateHighScoresWithScore:(NSNumber *)score word:(NSString *)word guesses:(NSNumber *)guesses;
+
+// Resets all high scores to zero
+- (void)resetHighScores;
 
 @end

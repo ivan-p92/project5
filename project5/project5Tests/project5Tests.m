@@ -9,11 +9,13 @@
 #import "project5Tests.h"
 #import "EvilGameplay.h"
 #import "EquivalenceClass.h"
+#import "History.h"
 
 @interface project5Tests ()
 
-@property EvilGameplay *evilGame;
-@property EquivalenceClass *equivalenceClass;
+@property (strong, nonatomic) EvilGameplay *evilGame;
+@property (strong, nonatomic) EquivalenceClass *equivalenceClass;
+@property (strong, nonatomic) History *highscores;
 
 @end
 
@@ -180,6 +182,42 @@
     
     // For more complex checks (in case of ties and such) it is easier
     // to test in testEvilGame
+}
+
+- (void)testHistory
+{
+    self.highscores = [[History alloc] init];
+    
+    // Set array of highscores manually to test for correct insertion
+    NSMutableArray *scores = [[NSMutableArray alloc] init];
+    
+    for (NSUInteger i = 0; i <= 50; i += 10) {
+        [scores addObject:[NSNumber numberWithInt:i]];
+    }
+    self.highscores.scores = [scores mutableCopy];
+    
+    // Insert highscore of 5
+    [self.highscores updateHighScoresWithScore:[NSNumber numberWithInt:5] word:@"Foo" guesses:[NSNumber numberWithInt:5]];
+    [scores replaceObjectAtIndex:0 withObject:[NSNumber numberWithInt:5]];
+    NSLog(@"New list should be:\n%@", scores);
+    NSLog(@"Result of History object:\n%@", self.highscores.scores);
+    STAssertTrue([scores isEqualToArray:self.highscores.scores], @"Insertion of score 5 wasn't successful");
+    
+    // Insert highscore 15. Should result in 10,15,20,30,40,50
+    [scores replaceObjectAtIndex:0 withObject:[NSNumber numberWithInt:10]];
+    [scores replaceObjectAtIndex:1 withObject:[NSNumber numberWithInt:15]];
+    [self.highscores updateHighScoresWithScore:[NSNumber numberWithInt:15] word:@"Foo" guesses:[NSNumber numberWithInt:5]];
+    NSLog(@"New list should be:\n%@", scores);
+    NSLog(@"Result of History object:\n%@", self.highscores.scores);
+    STAssertTrue([scores isEqualToArray:self.highscores.scores], @"Insertion of score 15 wasn't successful");
+    
+    // Test for inserting biggest score yet
+    [scores removeObjectAtIndex:0];
+    [scores addObject:[NSNumber numberWithInt:55]];
+    [self.highscores updateHighScoresWithScore:[NSNumber numberWithInt:55] word:@"Foo" guesses:[NSNumber numberWithInt:5]];
+    NSLog(@"New list should be:\n%@", scores);
+    NSLog(@"Result of History object:\n%@", self.highscores.scores);
+    STAssertTrue([scores isEqualToArray:self.highscores.scores], @"Insertion of score 55 wasn't successful");
 }
 
 @end
