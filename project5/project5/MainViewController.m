@@ -26,6 +26,9 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     self.mainViewDidAppearAfterFreshLaunch = YES;
+    
+    // Instantiate high scores, they are loaded/created automatically
+    self.highscores = [[History alloc] init];
     return self;
 }
 
