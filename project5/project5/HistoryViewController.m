@@ -26,6 +26,11 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    [self initUI];
+}
+
+- (void)initUI
+{
     // Make strings with scores, words and wrong guesses (errors)
     NSArray *reverseScores = [[self.delegate.highscores.scores reverseObjectEnumerator] allObjects];
     NSArray *reverseWords = [[self.delegate.highscores.words reverseObjectEnumerator] allObjects];
@@ -56,5 +61,10 @@
 {
     // return to main view
     [self.delegate historyViewControllerdidFinish:self];
+}
+- (IBAction)resetHighScores:(UIButton *)sender
+{
+    [self.delegate.highscores resetHighScores];
+    [self initUI];
 }
 @end

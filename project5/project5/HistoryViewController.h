@@ -26,7 +26,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *wordsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *errorsLabel;
 
+- (void)initUI;
+
 // Method for switching back to main view
 - (IBAction)done:(UIBarButtonItem *)sender;
+
+// Method for resetting highscores
+- (IBAction)resetHighScores:(UIButton *)sender;
 
 @end

@@ -35,7 +35,7 @@
 		2CE3D75D16E2904700ECDEDA /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CE3D75C16E2904700ECDEDA /* Icon@2x.png */; };
 		2CF99FFF16EA29D80078097E /* HistoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CF99FFE16EA29D80078097E /* HistoryViewController.xib */; };
 		2CF9A00216EA2A150078097E /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9A00116EA2A150078097E /* HistoryViewController.m */; };
-		2CF9A00A16EA45D20078097E /* HighScoreBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CF9A00916EA45D20078097E /* HighScoreBackground.png */; };
+		2CF9A00C16EA49B00078097E /* HighScoreBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CF9A00B16EA49B00078097E /* HighScoreBackground.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,7 +90,7 @@
 		2CF99FFE16EA29D80078097E /* HistoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryViewController.xib; sourceTree = "<group>"; };
 		2CF9A00016EA2A150078097E /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
 		2CF9A00116EA2A150078097E /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
-		2CF9A00916EA45D20078097E /* HighScoreBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HighScoreBackground.png; sourceTree = "<group>"; };
+		2CF9A00B16EA49B00078097E /* HighScoreBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HighScoreBackground.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,7 +173,7 @@
 				2C363ACB16E3915500C0AB81 /* Default-568h@2x.png */,
 				2C363AC916E3914F00C0AB81 /* Default@2x.png */,
 				2C363AC716E3914800C0AB81 /* Default.png */,
-				2CF9A00916EA45D20078097E /* HighScoreBackground.png */,
+				2CF9A00B16EA49B00078097E /* HighScoreBackground.png */,
 				2CE3D75C16E2904700ECDEDA /* Icon@2x.png */,
 				2CE3D75A16E2901100ECDEDA /* Icon.png */,
 				2C4F51F416DF90B000577161 /* project5-Info.plist */,
@@ -304,7 +304,7 @@
 				2C363ACA16E3914F00C0AB81 /* Default@2x.png in Resources */,
 				2C363ACC16E3915500C0AB81 /* Default-568h@2x.png in Resources */,
 				2CF99FFF16EA29D80078097E /* HistoryViewController.xib in Resources */,
-				2CF9A00A16EA45D20078097E /* HighScoreBackground.png in Resources */,
+				2CF9A00C16EA49B00078097E /* HighScoreBackground.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
