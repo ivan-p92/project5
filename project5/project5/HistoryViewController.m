@@ -7,6 +7,8 @@
 //
 
 #import "HistoryViewController.h"
+#import "MainViewController.h"
+#import "History.h"
 
 @interface HistoryViewController ()
 
@@ -17,9 +19,6 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
     return self;
 }
 
@@ -27,6 +26,24 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    // Make strings with scores, words and wrong guesses (errors)
+    NSArray *reverseScores = [[self.delegate.highscores.scores reverseObjectEnumerator] allObjects];
+    NSArray *reverseWords = [[self.delegate.highscores.words reverseObjectEnumerator] allObjects];
+    NSArray *reverseErrors = [[self.delegate.highscores.guesses reverseObjectEnumerator] allObjects];
+    
+    NSString *scores = [reverseScores  componentsJoinedByString:@"\n"];
+    NSString *words = [reverseWords componentsJoinedByString:@"\n"];
+    NSString *errors = [reverseErrors componentsJoinedByString:@"\n"];
+    
+    // Set the three labels text
+    self.scoresLabel.text = scores;
+    self.wordsLabel.text = words;
+    self.errorsLabel.text = errors;
+    
+    // Fit their size to their content
+    [self.scoresLabel sizeToFit];
+    [self.wordsLabel sizeToFit];
+    [self.errorsLabel sizeToFit];
 }
 
 - (void)didReceiveMemoryWarning
@@ -35,4 +52,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)done:(UIBarButtonItem *)sender
+{
+    // return to main view
+    [self.delegate historyViewControllerdidFinish:self];
+}
 @end

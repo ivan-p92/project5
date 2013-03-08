@@ -10,10 +10,11 @@
 
 #import "FlipsideViewController.h"
 #import "GameplayDelegate.h"
+#import "HistoryViewController.h"
 @class History;
 
 
-@interface MainViewController : UIViewController <FlipsideViewControllerDelegate, UITextFieldDelegate>
+@interface MainViewController : UIViewController <FlipsideViewControllerDelegate, HistoryViewControllerDelegate, UITextFieldDelegate>
 
 #pragma mark - UI properties
 // Necessary labels, buttons and textfield
@@ -42,9 +43,13 @@
 // Loads flip view
 - (IBAction)showInfo:(id)sender;
 
+// loads high scores view
+- (void)showHighScores;
+
 - (IBAction)dissmissKeyboard:(id)sender;
 - (IBAction)showKeyboard:(id)sender;
 - (IBAction)startNewGameButtonPressed:(UIButton *)sender;
+- (IBAction)highScoresButtonPressed:(UIButton *)sender;
 
 // Disables keyboard button and hides keyboard before new game is loaded
 - (void)updateViewBeforeNewGame;

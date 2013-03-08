@@ -120,7 +120,7 @@
     [self.scores removeObjectAtIndex:0];
     
     // The same process for the word and number of wrong guesses
-    [self.words insertObject:word atIndex:index];
+    [self.words insertObject:[word lowercaseString] atIndex:index];
     [self.words removeObjectAtIndex:0];
     [self.guesses insertObject:guesses atIndex:index];
     [self.guesses removeObjectAtIndex:0];

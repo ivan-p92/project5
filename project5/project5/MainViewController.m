@@ -31,7 +31,7 @@
     self.highscores = [[History alloc] init];
     
     // reset high scores
-    [self.highscores resetHighScores];
+//    [self.highscores resetHighScores];
     return self;
 }
 
@@ -87,6 +87,11 @@
     
     // wait a bit so that view updates
     [self performSelector:@selector(newGame) withObject:self afterDelay:0.1];
+}
+
+- (IBAction)highScoresButtonPressed:(UIButton *)sender
+{
+    [self showHighScores];
 }
 
 - (void)updateViewBeforeNewGame
@@ -229,7 +234,9 @@
     if (self.game.playerWonGame) {
         self.currentProgress.text = [self.game.currentProgress lowercaseString];
         self.alerts.text = @"Congratulations, you won!";
-        [self.highscores calculateAndSaveScoreWithWord:self.game.currentWord andGuesses:self.game.currentGuess];
+        if ([self.highscores calculateAndSaveScoreWithWord:self.game.currentWord andGuesses:self.game.currentGuess]) {
+            [self showHighScores];
+        }
     }
     else {
         self.currentProgress.text = [self.game.currentWord lowercaseString];
@@ -257,7 +264,21 @@
     [self presentViewController:controller animated:YES completion:nil];
 }
 
-- (void)viewDidUnload {
+- (void)showHighScores
+{
+    HistoryViewController *controller = [[HistoryViewController alloc] initWithNibName:@"HistoryViewController" bundle:nil];
+    controller.delegate = self;
+    controller.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
+- (void)historyViewControllerdidFinish:(HistoryViewController *)controller
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)viewDidUnload
+{
     [self setKeyboardButton:nil];
     [self setStartNewGameButton:nil];
     [super viewDidUnload];
