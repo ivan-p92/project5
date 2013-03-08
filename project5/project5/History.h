@@ -23,7 +23,7 @@
 - (void)createHighScoresAtPath:(NSString *)path;
 
 // calculate score for a game and save it if it is a high score
-- (void)calculateAndSaveScoreWithWord:(NSString *)word andGuesses:(NSUInteger)guesses;
+- (BOOL)calculateAndSaveScoreWithWord:(NSString *)word andGuesses:(NSUInteger)guesses;
 
 // Used by calculateAndSaveScoreWithWord to update highscores.plist
 - (void)updateHighScoresWithScore:(NSNumber *)score word:(NSString *)word guesses:(NSNumber *)guesses;

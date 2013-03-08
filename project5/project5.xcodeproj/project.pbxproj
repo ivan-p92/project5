@@ -33,6 +33,8 @@
 		2C4F523E16DFA19F00577161 /* History.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C4F523D16DFA19F00577161 /* History.m */; };
 		2CE3D75B16E2901100ECDEDA /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CE3D75A16E2901100ECDEDA /* Icon.png */; };
 		2CE3D75D16E2904700ECDEDA /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CE3D75C16E2904700ECDEDA /* Icon@2x.png */; };
+		2CF99FFF16EA29D80078097E /* HistoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CF99FFE16EA29D80078097E /* HistoryViewController.xib */; };
+		2CF9A00216EA2A150078097E /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9A00116EA2A150078097E /* HistoryViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +86,9 @@
 		2C4F523D16DFA19F00577161 /* History.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = History.m; sourceTree = "<group>"; };
 		2CE3D75A16E2901100ECDEDA /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
 		2CE3D75C16E2904700ECDEDA /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
+		2CF99FFE16EA29D80078097E /* HistoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryViewController.xib; sourceTree = "<group>"; };
+		2CF9A00016EA2A150078097E /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
+		2CF9A00116EA2A150078097E /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +156,9 @@
 				2C4F520416DF90B000577161 /* MainViewController.h */,
 				2C4F520516DF90B000577161 /* MainViewController.m */,
 				2C4F520A16DF90B000577161 /* MainViewController.xib */,
+				2CF9A00016EA2A150078097E /* HistoryViewController.h */,
+				2CF9A00116EA2A150078097E /* HistoryViewController.m */,
+				2CF99FFE16EA29D80078097E /* HistoryViewController.xib */,
 				2C4F523B16DF9E8300577161 /* Hangman Files */,
 				2C4F51F316DF90B000577161 /* Supporting Files */,
 			);
@@ -292,6 +300,7 @@
 				2C363AC816E3914800C0AB81 /* Default.png in Resources */,
 				2C363ACA16E3914F00C0AB81 /* Default@2x.png in Resources */,
 				2C363ACC16E3915500C0AB81 /* Default-568h@2x.png in Resources */,
+				2CF99FFF16EA29D80078097E /* HistoryViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,6 +356,7 @@
 				2C4F523516DF9DDA00577161 /* EvilGameplay.m in Sources */,
 				2C4F523A16DF9E7600577161 /* GoodGameplay.m in Sources */,
 				2C4F523E16DFA19F00577161 /* History.m in Sources */,
+				2CF9A00216EA2A150078097E /* HistoryViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
