@@ -10,7 +10,7 @@
 #import "GameplayDelegate.h"
 @class EquivalenceClass;
 
-@interface EvilGameplay : NSObject <GameplayDelegate>
+@interface EvilGameplay : NSObject <GameplayDelegate, NSCoding>
 
 @property (strong, nonatomic) EquivalenceClass *classes;
 

@@ -12,12 +12,6 @@
 #import "GameplayDelegate.h"
 #import "History.h"
 
-@interface MainViewController ()
-
-@property (assign, nonatomic) BOOL mainViewDidAppearAfterFreshLaunch;
-
-@end
-
 @implementation MainViewController
 
 #pragma mark - Init related methods
@@ -25,7 +19,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    self.mainViewDidAppearAfterFreshLaunch = YES;
+    self.shouldStartNewGame = YES;
     
     // Instantiate high scores, they are loaded/created automatically
     self.highscores = [[History alloc] init];
@@ -48,8 +42,8 @@
 {
     // Start new game, but not if view appeared after switching back from flipside
     // TODO: actually restore previous game if any
-    if (self.mainViewDidAppearAfterFreshLaunch) {
-        self.mainViewDidAppearAfterFreshLaunch = NO;
+    if (self.shouldStartNewGame) {
+        self.shouldStartNewGame = NO;
         [self newGame];
     }
 }
@@ -65,9 +59,16 @@
 
 - (void) initUI
 {
-    self.currentProgress.text = @"hangman";
-    self.guessedLetters.text = @"Letters played:\n ";
-    self.guessesLeft.text = [NSString stringWithFormat:@"Wrong guesses left:\n%d of %d", self.guesses, self.guesses];
+    if (self.shouldStartNewGame) {
+        self.currentProgress.text = @"hangman";
+        self.guessedLetters.text = @"Letters played:\n ";
+        self.guessesLeft.text = [NSString stringWithFormat:@"Wrong guesses left:\n%d of %d", self.guesses, self.guesses];
+    }
+    else {
+        [self updateLabelsWithAlert:@"Resume your game!"];
+        [self enableButtons];
+    }
+        
     self.textField.delegate = self;
 }
 
@@ -79,6 +80,13 @@
 - (IBAction)showKeyboard:(id)sender
 {
     [self.textField becomeFirstResponder];
+}
+
+- (void)enableButtons
+{
+    [self.textField becomeFirstResponder];
+    [self.keyboardButton setEnabled:YES];
+    [self.startNewGameButton setEnabled:YES];
 }
 
 - (IBAction)startNewGameButtonPressed:(UIButton *)sender
@@ -155,6 +163,7 @@
 // Settings don't have to be loaded again
 - (void)newGame
 {
+    self.gameNotYetOver = YES;
     NSLog(@"New Game is being started..");
     
     // load the words
@@ -173,6 +182,7 @@
     allWords = nil;
     
     // make new evil or good game
+    self.game = nil;
     if (self.evilMode) {
         self.game = [EvilGameplay alloc];
     }
@@ -185,9 +195,7 @@
     // set labels
     [self updateLabelsWithAlert:@"Guess the word!"];
     
-    [self.textField becomeFirstResponder];
-    [self.keyboardButton setEnabled:YES];
-    [self.startNewGameButton setEnabled:YES];
+    [self enableButtons];
 }
 
 // Called whenever user pressed key on keyboard
@@ -208,9 +216,9 @@
     else if ([self.game.guessedLetters rangeOfString:letter].location == NSNotFound){
         NSLog(@"Play round will be called with: %@", letter);
         
-        BOOL gameNotYetOver = [self.game playRoundForLetter:letter];
+        self.gameNotYetOver = [self.game playRoundForLetter:letter];
         NSLog(@"Word in mind: %@", self.game.currentWord);
-        if (gameNotYetOver) {
+        if (self.gameNotYetOver) {
             [self updateLabelsWithAlert:self.game.alert];
         }
         else {

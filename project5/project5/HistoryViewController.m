@@ -57,7 +57,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)done:(UIBarButtonItem *)sender
+- (IBAction)done:(id)sender
 {
     // return to main view
     [self.delegate historyViewControllerdidFinish:self];

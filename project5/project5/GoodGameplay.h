@@ -10,6 +10,6 @@
 #import "GameplayDelegate.h"
 @class EquivalenceClass;
 
-@interface GoodGameplay : NSObject <GameplayDelegate>
+@interface GoodGameplay : NSObject <GameplayDelegate, NSCoding>
 
 @end

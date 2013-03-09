@@ -29,7 +29,7 @@
 - (void)initUI;
 
 // Method for switching back to main view
-- (IBAction)done:(UIBarButtonItem *)sender;
+- (IBAction)done:(id)sender;
 
 // Method for resetting highscores
 - (IBAction)resetHighScores:(UIButton *)sender;

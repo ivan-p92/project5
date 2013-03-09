@@ -16,6 +16,9 @@
 @property (strong, nonatomic) NSMutableArray *words;
 @property (strong, nonatomic) NSMutableArray *guesses;
 
+// returns path to highscores.plist
+- (NSString *)highscoresPath;
+
 // loads high scores from highscores.plist in /Documents
 - (void)loadHighScores;
 

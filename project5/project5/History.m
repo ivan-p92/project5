@@ -23,11 +23,16 @@
     return self;
 }
 
-- (void)loadHighScores
+- (NSString *)highscoresPath
 {
     // Get path to file highscores.plist in /Documents directory
     NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    path = [path stringByAppendingPathComponent:@"highscores.plist"];
+    return [path stringByAppendingPathComponent:@"highscores.plist"];
+}
+
+- (void)loadHighScores
+{
+    NSString *path = [self highscoresPath];
     
     // If the file exists, load the scores into |highScores|, else
     // create a new highscores.plist file
@@ -126,8 +131,7 @@
     [self.guesses removeObjectAtIndex:0];
     
     // Now save the scores and info to the /Documents/highscores.plist file
-    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    path = [path stringByAppendingPathComponent:@"highscores.plist"];
+    NSString *path = [self highscoresPath];
     
     NSLog(@"New scores:\n%@", self.scores);
     NSLog(@"New words:\n%@", self.words);
@@ -145,8 +149,7 @@
 
 - (void)resetHighScores
 {
-    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    path = [path stringByAppendingPathComponent:@"highscores.plist"];
+    NSString *path = [self highscoresPath];
     
     [self createHighScoresAtPath:path];
 }
