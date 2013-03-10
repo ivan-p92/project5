@@ -15,6 +15,7 @@
 @property (strong, nonatomic) NSMutableArray *scores;
 @property (strong, nonatomic) NSMutableArray *words;
 @property (strong, nonatomic) NSMutableArray *guesses;
+@property (assign, nonatomic) NSNumber *mostRecentScore;
 
 // returns path to highscores.plist
 - (NSString *)highscoresPath;

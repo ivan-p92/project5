@@ -12,6 +12,10 @@
 #import "GameplayDelegate.h"
 #import "History.h"
 
+#define highScoreAlertView 1
+#define wonAlertView 2
+#define lostAlertView 3
+
 @implementation MainViewController
 
 #pragma mark - Init related methods
@@ -68,7 +72,11 @@
         [self updateLabelsWithAlert:@"Resume your game!"];
         [self enableButtons];
     }
-        
+    
+    // Set the font of all navigation bars to Noteworthy
+    [[UINavigationBar appearance] setTitleTextAttributes:
+     @{UITextAttributeFont:[UIFont fontWithName:@"Noteworthy" size:16]}];
+    [[UIBarButtonItem appearance] setTitleTextAttributes:@{UITextAttributeFont:[UIFont fontWithName:@"Noteworthy" size:12]} forState:UIControlStateNormal];
     self.textField.delegate = self;
 }
 
@@ -243,13 +251,33 @@
         self.currentProgress.text = [self.game.currentProgress lowercaseString];
         self.alerts.text = @"Congratulations, you won!";
         if ([self.highscores calculateAndSaveScoreWithWord:self.game.currentWord andGuesses:self.game.currentGuess]) {
-            [self showHighScores];
+            
+            NSString *message = [NSString stringWithFormat:@"Your score is: %@\nThis is a new high score!", self.highscores.mostRecentScore];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"New high score!" message:message delegate:self cancelButtonTitle:nil otherButtonTitles:@"View high scores", nil];
+            alertView.tag = highScoreAlertView;
+            [alertView show];
+        }
+        else {
+            NSString *message = [NSString stringWithFormat:@"Your score is: %@\nThis is no high score..", self.highscores.mostRecentScore];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"You won!" message:message delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+            alertView.tag = wonAlertView;
+            [alertView show];
         }
     }
     else {
         self.currentProgress.text = [self.game.currentWord lowercaseString];
         self.guessesLeft.text = @"Wrong guesses left:\nnone";
         self.alerts.text = @"Unfortunately, you lost..";
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"You lost.." message:@"Unfortunately, you lost..\nTry again!" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        alertView.tag = lostAlertView;
+        [alertView show];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == highScoreAlertView) {
+        [self showHighScores];
     }
 }
 

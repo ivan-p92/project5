@@ -17,7 +17,7 @@
 
 @end
 
-@interface HistoryViewController : UIViewController
+@interface HistoryViewController : UIViewController <UIAlertViewDelegate>
 
 @property (weak, nonatomic) MainViewController <HistoryViewControllerDelegate> *delegate;
 

@@ -84,15 +84,12 @@
 {
     // Calculate score using  (27 - guesses) * (25 - wordLength)
     NSUInteger score = (27 - guesses) * (25 - [word length]);
+    self.mostRecentScore = [NSNumber numberWithInt:score];
     
     BOOL scoreIsHighScore = NO;
     
     NSLog(@"The score is: %d", score);
-    // Enumerate old scores
-    NSLog(@"Old scores:");
-    for (NSNumber *score in self.scores) {
-        NSLog(@"%@", score);
-    }
+    
     if (score > [[self.scores objectAtIndex:0] integerValue]) {
         NSLog(@"It is a new high score!");
         scoreIsHighScore = YES;
@@ -101,7 +98,6 @@
     }
     else {
         NSLog(@"But it is not a high score...");
-        NSLog(@"Score at index 0: %@", [self.scores objectAtIndex:0]);
     }
     
     return scoreIsHighScore;
@@ -120,7 +116,6 @@
     
     // Insert score at the new index and then remove the first item in the list,
     // thereby removing the lowest high score
-    NSLog(@"Inserting %@ at %d", score, index);
     [self.scores insertObject:score atIndex:index];
     [self.scores removeObjectAtIndex:0];
     
@@ -133,9 +128,6 @@
     // Now save the scores and info to the /Documents/highscores.plist file
     NSString *path = [self highscoresPath];
     
-    NSLog(@"New scores:\n%@", self.scores);
-    NSLog(@"New words:\n%@", self.words);
-    NSLog(@"New guesses:\n%@", self.guesses);
     NSDictionary *highscores = @{
                                  @"scores": self.scores,
                                  @"words": self.words,

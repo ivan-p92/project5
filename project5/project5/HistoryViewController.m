@@ -62,9 +62,19 @@
     // return to main view
     [self.delegate historyViewControllerdidFinish:self];
 }
+
 - (IBAction)resetHighScores:(UIButton *)sender
 {
-    [self.delegate.highscores resetHighScores];
-    [self initUI];
+    UIAlertView *resetWarning = [[UIAlertView alloc] initWithTitle:@"Reset high scores" message:@"Are you sure you want to reset the high scores? This is not undoable!" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Reset scores", nil];
+    [resetWarning show];
 }
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex != [alertView cancelButtonIndex]) {
+        [self.delegate.highscores resetHighScores];
+        [self initUI];
+    }
+}
+
 @end

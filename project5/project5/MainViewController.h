@@ -14,7 +14,7 @@
 @class History;
 
 
-@interface MainViewController : UIViewController <FlipsideViewControllerDelegate, HistoryViewControllerDelegate, UITextFieldDelegate>
+@interface MainViewController : UIViewController <FlipsideViewControllerDelegate, HistoryViewControllerDelegate, UITextFieldDelegate, UIAlertViewDelegate>
 
 #pragma mark - UI properties
 // Necessary labels, buttons and textfield
