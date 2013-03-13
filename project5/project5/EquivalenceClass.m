@@ -40,25 +40,33 @@
 
 - (NSString *)equivalenceClassForWord:(NSString *)word andLetter:(NSString *)letter
 {
+    // TODO: rangeOfString:options:range
+    
     // assume letter doesn't appear in word
     BOOL letterFound = NO;
     NSMutableString *equivalenceClass = [NSMutableString new];
-    NSMutableString *mutableWord = [word mutableCopy];
-    NSRange range;
+    NSUInteger wordLength = [word length];
+    NSRange searchRange = NSMakeRange(0, wordLength);
+    NSRange matchRange;
     
     // get range of occurence and continue until all occurences have been found
     do {
-        range = [mutableWord rangeOfString:letter];
+        matchRange = [word rangeOfString:letter options:0 range:searchRange];
         
         // if the letter is found, append location to class string
         // and replace the letter with zero so that next occurence
         // can be found
-        if (range.location != NSNotFound) {
+        if (matchRange.location != NSNotFound) {
             letterFound = YES;
-            [equivalenceClass appendString:[NSString stringWithFormat:@"%ld-", (unsigned long)range.location + 1]];
-            [mutableWord replaceCharactersInRange:range withString:@"0"];
+            [equivalenceClass appendString:[NSString stringWithFormat:@"%ld-", (unsigned long)matchRange.location + 1]];
+            if (matchRange.location == wordLength - 1) {
+                break;
+            }
+            else {
+                searchRange = NSMakeRange(matchRange.location + 1, wordLength - (matchRange.location + 1));
+            }
         }
-    } while (range.location != NSNotFound);
+    } while (matchRange.location != NSNotFound);
     
     if (!letterFound) {
         [equivalenceClass appendString:@"0-"];
