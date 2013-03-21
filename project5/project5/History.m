@@ -8,16 +8,13 @@
 
 #import "History.h"
 
-@interface History ()
-
-@end
-
 @implementation History
 
 - (id)init
 {
     self = [super init];
     
+    // Load scores into properties when initializing.
     [self loadHighScores];
     
     return self;
@@ -25,7 +22,7 @@
 
 - (NSString *)highscoresPath
 {
-    // Get path to file highscores.plist in /Documents directory
+    // Get path to file highscores.plist in /Documents/ directory.
     NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     return [path stringByAppendingPathComponent:@"highscores.plist"];
 }
@@ -35,15 +32,13 @@
     NSString *path = [self highscoresPath];
     
     // If the file exists, load the scores into |highScores|, else
-    // create a new highscores.plist file
+    // create a new highscores.plist file.
     if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-        NSLog(@"Loading high scores from highscores.plist");
         NSDictionary *scoresAndInfo = [NSDictionary dictionaryWithContentsOfFile:path];
         
         self.scores = [[scoresAndInfo objectForKey:@"scores"] mutableCopy];
         self.words = [[scoresAndInfo objectForKey:@"words"] mutableCopy];
         self.guesses = [[scoresAndInfo objectForKey:@"guesses"] mutableCopy];
-        NSLog(@"High scores and info:\n%@", scoresAndInfo);
     }
     else {
         NSLog(@"High scores don't exist yet, create new ones");
@@ -57,11 +52,12 @@
     NSMutableArray *scoresArray = [[NSMutableArray alloc] init];
     NSMutableArray *wordsArray = [[NSMutableArray alloc] init];
     NSMutableArray *guessesArray = [[NSMutableArray alloc] init];
+    NSNumber *zero = [NSNumber numberWithInt:0];
     
     // Create array of scores (all zero) and
-    // Create array of details (all empty string)
+    // create array of details (all empty string).
     for (NSUInteger i = 1; i <= numberOfEntries; i++) {
-        [scoresArray addObject:[NSNumber numberWithInt:0]];
+        [scoresArray addObject:zero];
         [wordsArray addObject:@""];
         [guessesArray addObject:@""];
     }
@@ -72,7 +68,7 @@
                                  @"guesses": guessesArray
                                  };
     
-    // Write the highscores dictionary to /Documents/highscores.plist
+    // Write the highscores dictionary to /Documents/highscores.plist.
     [highscores writeToFile:path atomically:YES];
     NSLog(@"Highscore.plist has been created, loading it again");
     
@@ -82,22 +78,18 @@
 
 - (BOOL)calculateAndSaveScoreWithWord:(NSString *)word andGuesses:(NSUInteger)guesses
 {
-    // Calculate score using  (27 - guesses) * (25 - wordLength)
+    // Calculate score using  (27 - guesses) * (25 - wordLength).
     NSUInteger score = (27 - guesses) * (25 - [word length]);
+    
     self.mostRecentScore = [NSNumber numberWithInt:score];
     
     BOOL scoreIsHighScore = NO;
     
-    NSLog(@"The score is: %d", score);
-    
+    // If it is a high score, update the list using -updateHighScoresWithScore:word:guesses:.
     if (score > [[self.scores objectAtIndex:0] integerValue]) {
-        NSLog(@"It is a new high score!");
         scoreIsHighScore = YES;
         NSNumber *newScore = [NSNumber numberWithInt:score];
         [self updateHighScoresWithScore:newScore word:word guesses:[NSNumber numberWithInt:guesses]];
-    }
-    else {
-        NSLog(@"But it is not a high score...");
     }
     
     return scoreIsHighScore;
@@ -105,27 +97,27 @@
 
 - (void)updateHighScoresWithScore:(NSNumber *)score word:(NSString *)word guesses:(NSNumber *)guesses
 {
-    // Find index new score by finding index of next highest score
+    // Find index of new score by finding index of next highest score.
     NSUInteger index = 1;
     for (; index < [self.scores count]; index++) {
-        // Next score is higher than the new score, so stop
+        // Next score is higher than the new score, so stop.
         if ([[self.scores objectAtIndex:index] integerValue] >= [score integerValue]) {
             break;
         }
     } // end for
     
     // Insert score at the new index and then remove the first item in the list,
-    // thereby removing the lowest high score
+    // thereby removing the lowest high score.
     [self.scores insertObject:score atIndex:index];
     [self.scores removeObjectAtIndex:0];
     
-    // The same process for the word and number of wrong guesses
+    // The same process for the word and number of wrong guesses.
     [self.words insertObject:[word lowercaseString] atIndex:index];
     [self.words removeObjectAtIndex:0];
     [self.guesses insertObject:guesses atIndex:index];
     [self.guesses removeObjectAtIndex:0];
     
-    // Now save the scores and info to the /Documents/highscores.plist file
+    // Now save the scores and info to the /Documents/highscores.plist file.
     NSString *path = [self highscoresPath];
     
     NSDictionary *highscores = @{
@@ -136,7 +128,6 @@
     
     // Write the highscores dictionary to /Documents/highscores.plist
     [highscores writeToFile:path atomically:YES];
-    NSLog(@"Highscores have been updated!");
 }
 
 - (void)resetHighScores

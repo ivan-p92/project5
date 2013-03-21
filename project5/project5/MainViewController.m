@@ -12,6 +12,7 @@
 #import "GameplayDelegate.h"
 #import "History.h"
 
+// Tags for the three different UIAlertView objects
 #define highScoreAlertView 1
 #define wonAlertView 2
 #define lostAlertView 3
@@ -23,13 +24,14 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    
+    // |shouldStartNewGame| may be set to NO by -application:didFinishLoadingWithOptions:
+    // in the AppDelegate if a savegame is found and loaded
     self.shouldStartNewGame = YES;
     
     // Instantiate high scores, they are loaded/created automatically
     self.highscores = [[History alloc] init];
-    
-    // reset high scores
-//    [self.highscores resetHighScores];
+
     return self;
 }
 
@@ -44,8 +46,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    // Start new game, but not if view appeared after switching back from flipside
-    // TODO: actually restore previous game if any
+    // Start new game if necessary
     if (self.shouldStartNewGame) {
         self.shouldStartNewGame = NO;
         [self newGame];
@@ -61,22 +62,28 @@
 
 #pragma mark - UI methods
 
-- (void) initUI
+- (void)initUI
 {
+    // If a new game should be started, put placeholders in labels
     if (self.shouldStartNewGame) {
         self.currentProgress.text = @"hangman";
         self.guessedLetters.text = @"Letters played:\n ";
         self.guessesLeft.text = [NSString stringWithFormat:@"Wrong guesses left:\n%d of %d", self.guesses, self.guesses];
     }
+    // If not, a saved game is reloaded
     else {
+        // Update all labels. The save game has been unarchived into the |game|
+        // property, so the player continues where he left off.
         [self updateLabelsWithAlert:@"Resume your game!"];
+        
         [self enableButtons];
     }
     
-    // Set the font of all navigation bars to Noteworthy
+    // Set the font of all navigation bars and ~buttons to Noteworthy
     [[UINavigationBar appearance] setTitleTextAttributes:
      @{UITextAttributeFont:[UIFont fontWithName:@"Noteworthy" size:16]}];
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{UITextAttributeFont:[UIFont fontWithName:@"Noteworthy" size:12]} forState:UIControlStateNormal];
+    
     self.textField.delegate = self;
 }
 
@@ -99,9 +106,10 @@
 
 - (IBAction)startNewGameButtonPressed:(UIButton *)sender
 {
+    // Show loading message in the |alerts| label
     [self updateViewBeforeNewGame];
     
-    // wait a bit so that view updates
+    // Wait a bit so that view updates
     [self performSelector:@selector(newGame) withObject:self afterDelay:0.1];
 }
 
@@ -112,7 +120,7 @@
 
 - (void)updateViewBeforeNewGame
 {
-    NSLog(@"Updating view before game loading..");
+    // Disables buttons and shows loading message
     [self.keyboardButton setEnabled:NO];
     [self.startNewGameButton setEnabled:NO];
     self.alerts.text = @"Loading new game...";
@@ -126,6 +134,7 @@
     
     if ([self.game.guessedLetters isEqualToString:@""]) {
         // If the user didn't guess any letters, add a whitespace after newline
+        // to force second line
         self.guessedLetters.text = @"Letters played:\n ";
     }
     else {
@@ -149,12 +158,12 @@
     self.wordLength = [defaults integerForKey:@"wordLength"];
     
     // integerForKey returns 0 if no setting exists, so in that case
-    // they are created
+    // there were no settings yet.
     if (self.wordLength == 0) {
-        NSLog(@"No existing user settings. Creating them.");
         self.wordLength = 7;
         self.guesses = 6;
         self.evilMode = YES;
+        
         [defaults setInteger:self.wordLength forKey:@"wordLength"];
         [defaults setInteger:self.guesses forKey:@"guesses"];
         [defaults setBool:self.evilMode forKey:@"evilMode"];
@@ -167,29 +176,28 @@
     }
 }
 
-// New game with loaded settings
-// Settings don't have to be loaded again
 - (void)newGame
 {
     self.gameNotYetOver = YES;
     NSLog(@"New Game is being started..");
     
-    // load the words
+    // Load the words
     NSString *path = [[NSBundle mainBundle] pathForResource:@"words" ofType:@"plist"];
     NSArray *allWords = [NSArray arrayWithContentsOfFile:path];
     
     NSMutableArray *words = [[NSMutableArray alloc] init];
     
-    // only take words of desired length
+    // Only take words of desired length
     for (int index = 0; index < [allWords count]; index++) {
         if ([[allWords objectAtIndex:index] length] == self.wordLength) {
             [words addObject:[allWords objectAtIndex:index]];
         }
     }
     
+    // Discard |allWords| to save memory
     allWords = nil;
     
-    // make new evil or good game
+    // Make new evil or good game according to setting
     self.game = nil;
     if (self.evilMode) {
         self.game = [EvilGameplay alloc];
@@ -200,7 +208,6 @@
     
     self.game = [self.game initGameWithWords:words andGuesses:self.guesses];
     
-    // set labels
     [self updateLabelsWithAlert:@"Guess the word!"];
     
     [self enableButtons];
@@ -211,21 +218,21 @@
 {
     NSString *letter = [string uppercaseString];
      
-    // now check whether it is a letter
+    // Now check whether it is a letter
     NSRange location = [letter rangeOfCharacterFromSet:[NSCharacterSet uppercaseLetterCharacterSet]];
     
     // If not a letter, show message
     // Else if not already played, play round
     // Else alert player that letter has already been played
     if (location.location == NSNotFound) {
-        NSLog(@"Invalid character!");
         self.alerts.text = @"Invalid character!";
     }
     else if ([self.game.guessedLetters rangeOfString:letter].location == NSNotFound){
-        NSLog(@"Play round will be called with: %@", letter);
-        
+        // The game is over if -playRoundForLetter: returns NO
         self.gameNotYetOver = [self.game playRoundForLetter:letter];
+        
         NSLog(@"Word in mind: %@", self.game.currentWord);
+        
         if (self.gameNotYetOver) {
             [self updateLabelsWithAlert:self.game.alert];
         }
@@ -234,7 +241,6 @@
         }
     }
     else {
-        NSLog(@"Letter already played...");
         self.alerts.text = @"You already played this letter!";
     }
 
@@ -244,38 +250,51 @@
 
 - (void)endGame
 {
+    // Once, the game is over, no interaction is possible so the keyboard is hidden
+    // and its corresponding button disabled
     [self.keyboardButton setEnabled:NO];
     [self.textField resignFirstResponder];
-     
+    
+    // If the player won, update labels, calculate score and show alert views
     if (self.game.playerWonGame) {
         self.currentProgress.text = [self.game.currentProgress lowercaseString];
         self.alerts.text = @"Congratulations, you won!";
+        
+        // If the player has a new high score, show the corresponding alert
         if ([self.highscores calculateAndSaveScoreWithWord:self.game.currentWord andGuesses:self.game.currentGuess]) {
             
             NSString *message = [NSString stringWithFormat:@"Your score is: %@\nThis is a new high score!", self.highscores.mostRecentScore];
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"New high score!" message:message delegate:self cancelButtonTitle:nil otherButtonTitles:@"View high scores", nil];
             alertView.tag = highScoreAlertView;
+            
             [alertView show];
         }
+        // If the player doesn't have a high score, show the corresponding alert
         else {
             NSString *message = [NSString stringWithFormat:@"Your score is: %@\nThis is no high score..", self.highscores.mostRecentScore];
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"You won!" message:message delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
             alertView.tag = wonAlertView;
+            
             [alertView show];
         }
     }
+    // If the player lost, update labels and show corresponding alert view
     else {
         self.currentProgress.text = [self.game.currentWord lowercaseString];
         self.guessesLeft.text = @"Wrong guesses left:\nnone";
         self.alerts.text = @"Unfortunately, you lost..";
+        
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"You lost.." message:@"Unfortunately, you lost..\nTry again!" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
         alertView.tag = lostAlertView;
+        
         [alertView show];
     }
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    // Currently, only a tap on the high scores alert view should result in
+    // an action (showing the high scores)
     if (alertView.tag == highScoreAlertView) {
         [self showHighScores];
     }
@@ -288,7 +307,7 @@
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 
-    // reload settings
+    // Reload settings
     [self loadSettings];
 }
 

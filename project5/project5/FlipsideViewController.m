@@ -53,7 +53,7 @@
     BOOL evilMode = sender.isOn;
     [defaults setBool:evilMode forKey:@"evilMode"];
     [defaults synchronize];
-    NSLog(@"Evil mode saved: %@", evilMode?@"YES":@"NO");
+//    NSLog(@"Evil mode saved: %@", evilMode?@"YES":@"NO");
 }
 
 - (IBAction)wordLengthChanged:(UISlider *)sender
@@ -77,7 +77,7 @@
     NSUInteger wordLength = lroundf(sender.value);
     [defaults setInteger:wordLength forKey:@"wordLength"];
     [defaults synchronize];
-    NSLog(@"New word length saved: %d", wordLength);
+//    NSLog(@"New word length saved: %d", wordLength);
 }
 
 - (IBAction)saveGuesses:(UISlider *)sender
@@ -87,7 +87,7 @@
     NSUInteger guesses = lroundf(sender.value);
     [defaults setInteger:guesses forKey:@"guesses"];
     [defaults synchronize];
-    NSLog(@"New guesses saved: %d", guesses);
+//    NSLog(@"New guesses saved: %d", guesses);
 }
 
 - (void)viewDidUnload {

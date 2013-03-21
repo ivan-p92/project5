@@ -13,25 +13,29 @@
 - (id)init
 {
     self = [super init];
+    
+    // Initialize empty dictionary
     self.classes = [[NSMutableDictionary alloc] init];
     return self;
 }
 
 - (void)addWordToClass:(NSString *)word forLetter:(NSString *)letter
 {
+    // Get the equivalenceClass for the given word and letter.
     NSString *equivalenceClass = [self equivalenceClassForWord:word andLetter:letter];
-//    NSLog(@"Word: %@, Letter:%@, Class:%@", word, letter, equivalenceClass);
     
     NSMutableArray *class = nil;
-    // add word to dictionary with this class
+    
+    // Add word to dictionary for this class
     class = [self.classes objectForKey:equivalenceClass];
+    
+    // If their are no words yet for this class, create a key-object pair for the class
     if (class == nil) {
-        //NSLog(@"Make class: %@, with word: %@", equivalenceClass, word);
         class = [NSMutableArray arrayWithObject:word];
         [self.classes setObject:class forKey:equivalenceClass];
     }
+    // If the class already exists, simply add the word to it
     else {
-        //NSLog(@"Add to class:%@", word);
         [class addObject:word];
     }
 
@@ -40,28 +44,31 @@
 
 - (NSString *)equivalenceClassForWord:(NSString *)word andLetter:(NSString *)letter
 {
-    // TODO: rangeOfString:options:range
-    
-    // assume letter doesn't appear in word
+    // Assume letter doesn't appear in word.
     BOOL letterFound = NO;
+    
     NSMutableString *equivalenceClass = [NSMutableString new];
     NSUInteger wordLength = [word length];
     NSRange searchRange = NSMakeRange(0, wordLength);
     NSRange matchRange;
     
-    // get range of occurence and continue until all occurences have been found
+    // Get range of occurence and continue until all occurences have been found
     do {
         matchRange = [word rangeOfString:letter options:0 range:searchRange];
         
-        // if the letter is found, append location to class string
-        // and replace the letter with zero so that next occurence
-        // can be found
+        // If the letter is found, append location to |equivalenceClass|
+        // and update the searchRange to search from the latest match to the
+        // end of the word.
         if (matchRange.location != NSNotFound) {
             letterFound = YES;
+            
             [equivalenceClass appendString:[NSString stringWithFormat:@"%ld-", (unsigned long)matchRange.location + 1]];
+            
+            // If the matched letter is the last letter of the word, stop the search.
             if (matchRange.location == wordLength - 1) {
                 break;
             }
+            // If not, update |searchRange| to look for next match.
             else {
                 searchRange = NSMakeRange(matchRange.location + 1, wordLength - (matchRange.location + 1));
             }
@@ -82,11 +89,20 @@
     NSArray *class;
     
     for (NSString *key in self.classes) {
+        // Get the array of words for given class
         class = [self.classes objectForKey:key];
+        
+        // If the number of words is larger than the current largest
+        // number of words, initialize |largestClassess| to array
+        // with only the new equivalence class.
         if ([class count] > largestNumberOfWords) {
             largestNumberOfWords = [class count];
             largestClasses = [NSMutableArray arrayWithObject:key];
-        } else if ([class count] == largestNumberOfWords) {
+        }
+        // If the number of words is equal to the current largest
+        // number of words, the equivalence class is added to the
+        // |largestClasses| array.
+        else if ([class count] == largestNumberOfWords) {
             [largestClasses addObject:key];
         }
     }
@@ -94,25 +110,26 @@
     
     NSString *largestClass;
     
-    // now select class 0 if tie and present
+    // If there is a tie and class 0- is among the largest classes,
+    // it is selected. If not, a random class is selected among the
+    // largest classes.
     if ([largestClasses count] > 1) {
-        NSLog(@"Tie!");
-        
-        // 0 is present
         if([largestClasses indexOfObject:@"0-"] != NSNotFound) {
             largestClass = @"0-";
         }
-        // else pick random majority class
         else {
             NSUInteger index = arc4random() % [largestClasses count];
             largestClass = [largestClasses objectAtIndex:index];
         }
     }
-    // else just convert the class to NSUInteger
+    // If there isn't a tie, just pick the equivalence class.
     else {
         largestClass = [largestClasses objectAtIndex:0];
     }
     
+    // Dictionary that will be returned contains string representation
+    // of best equivalence class along with array of all words belonging
+    // to that class.
     NSDictionary *result = @{
         @"largestClass": largestClass,
         @"newWords": [self.classes objectForKey:largestClass]

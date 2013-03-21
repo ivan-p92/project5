@@ -16,6 +16,7 @@
 
 @property (strong, nonatomic) MainViewController *mainViewController;
 
+// Returns the absolute path to the game.savegame file
 - (NSString *)saveGamePath;
 
 @end

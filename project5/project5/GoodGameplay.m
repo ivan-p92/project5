@@ -23,6 +23,8 @@
 - (id)init
 {
     self = [super init];
+    
+    // Generally, this init will never be called.
     NSArray *words = [NSArray arrayWithObject:@"FOO"];
     return [self initGameWithWords:words andGuesses:2];
 }
@@ -32,16 +34,19 @@
     NSLog(@"Good game init.");
     self = [super init];
     
+    // Pick a random word from the list of words.
     NSUInteger randomIndex = arc4random() % [words count];
     self.currentWord = [words objectAtIndex:randomIndex];
+    
     self.guesses = guesses;
     self.currentGuess = 0;
     self.unknownLettersLeft = [self.currentWord length];
     self.guessedLetters = [NSMutableString stringWithString:@""];
+    self.words = nil;
     
     self.currentProgress = [[NSMutableString alloc] init];
     
-    // change currentProgress into hyphens
+    // Change currentProgress into hyphens.
     for (int i = 1; i <= self.unknownLettersLeft; i++) {
         [self.currentProgress appendString:@"-"];
     }
@@ -56,20 +61,36 @@
     
     BOOL letterWasFound = NO;
     
-    NSRange letterLocation;
-    NSMutableString *word = [self.currentWord mutableCopy];
+    NSUInteger wordLength = [self.currentWord length];
+    NSRange searchRange = NSMakeRange(0, wordLength);
+    NSRange matchRange;
     
+    // Look for occurrences of the played letter in the word.
+    // Stops if last letter is a match or if no matches left.
     do {
-        letterLocation = [word rangeOfString:letter];
-        // letter was found, so update currentProgress and other properties
-        if (letterLocation.location != NSNotFound) {
+        matchRange = [self.currentWord rangeOfString:letter options:0 range:searchRange];
+        
+        // Letter was found, so update currentProgress and other properties
+        if (matchRange.location != NSNotFound) {
             self.unknownLettersLeft--;
             letterWasFound = YES;
-            [word replaceCharactersInRange:letterLocation withString:@"0"];
-            [self.currentProgress replaceCharactersInRange:letterLocation withString:letter];
+            
+            // Put the letter at the right place in the progress string.
+            [self.currentProgress replaceCharactersInRange:matchRange withString:letter];
+        
+            // If the matched letter is the last letter of the word, stop the search.
+            if (matchRange.location == wordLength - 1) {
+                break;
+            }
+            // If not, update |searchRange| to look for next match.
+            else {
+                searchRange = NSMakeRange(matchRange.location + 1, wordLength - (matchRange.location + 1));
+            }
+            
         }
-    } while (letterLocation.location != NSNotFound);
+    } while (matchRange.location != NSNotFound);
     
+    // Set the message that will be shown to the user.
     if (letterWasFound) {
         self.alert = @"Good choice!";
     }
@@ -78,19 +99,25 @@
         self.alert = @"Wrong choice...";
     }
     
+    // Check for end of game if all letters found...
     if (self.unknownLettersLeft == 0) {
         self.playerWonGame = YES;
         return NO;
-    } else if (self.currentGuess == self.guesses) {
+    }
+    // ... or if maximum number of wrong guesses has been reached.
+    else if (self.currentGuess == self.guesses) {
         self.playerWonGame = NO;
         return NO;
-    } else {
+    }
+    // If the game hasn't ended yet, return YES.
+    else {
         return YES;
     }
 }
 
 # pragma mark - NSCoding methods
 
+// Encode the game.
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
     [aCoder encodeObject:self.words forKey:@"words"];
@@ -105,6 +132,7 @@
     NSLog(@"Encoded GoodGameplay object");
 }
 
+// Decode a game.
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self.words = [aDecoder decodeObjectForKey:@"words"];

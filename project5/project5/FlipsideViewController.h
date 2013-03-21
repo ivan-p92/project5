@@ -30,12 +30,12 @@
 // Sent when the user wants to switch back to main view
 - (IBAction)done:(id)sender;
 
-// Methods mapped to valueChanged actions
+// Methods mapped to valueChanged actions of sliders and switch
 - (IBAction)evilModeChanged:(UISwitch *)sender;
 - (IBAction)wordLengthChanged:(UISlider *)sender;
 - (IBAction)guessesChanged:(UISlider *)sender;
 
-// Called when user lifts finger from sliders
+// Called when user lifts finger from sliders to save the new values
 - (IBAction)saveWordLength:(UISlider *)sender;
 - (IBAction)saveGuesses:(UISlider *)sender;
 

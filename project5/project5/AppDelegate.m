@@ -19,8 +19,11 @@
     self.mainViewController = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil];
     self.window.rootViewController = self.mainViewController;
     
-    // Handle te loading of a previously saved game
+    // Handle te loading of a previously saved game.
     NSString *path = [self saveGamePath];
+    
+    // If there is a savegame, no new game should start and the savegame
+    // is unarchived.
     if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
         self.mainViewController.game = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
         self.mainViewController.shouldStartNewGame = NO;
@@ -44,7 +47,7 @@
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     NSLog(@"%@", NSStringFromSelector(_cmd));
     
-    // Save game object to game.savegame, but only if not game isn't over yet
+    // Save game object to game.savegame, but only if the game isn't over yet
     if (self.mainViewController.gameNotYetOver) {
         NSString *path = [self saveGamePath];
         [NSKeyedArchiver archiveRootObject:self.mainViewController.game toFile:path];

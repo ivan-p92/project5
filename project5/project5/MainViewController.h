@@ -43,28 +43,45 @@
 @property (assign, nonatomic) BOOL shouldStartNewGame;
 
 #pragma mark - UI methods
+// Initializes interface and changes appearance of default elements
+- (void)initUI;
+
 // Loads flip view
 - (IBAction)showInfo:(id)sender;
 
-// loads high scores view
+// Loads high scores view
 - (void)showHighScores;
+
+// Enables the keyboard and new game buttons and shows the keyboard
 - (void)enableButtons;
 
+// To hide and show the keyboard
 - (IBAction)dissmissKeyboard:(id)sender;
 - (IBAction)showKeyboard:(id)sender;
+
+// Calls -newGame: to start new game with current settings
+// after the button is pressed.
 - (IBAction)startNewGameButtonPressed:(UIButton *)sender;
 - (IBAction)highScoresButtonPressed:(UIButton *)sender;
 
 // Disables keyboard button and hides keyboard before new game is loaded
 - (void)updateViewBeforeNewGame;
 
+// Updates the contents of the four labels. The given string will
+// be put as content for |alerts| label
 - (void)updateLabelsWithAlert:(NSString *)alert;
 
 #pragma mark - Game methods
+// Loads the settings and saves them into the three properties
+// |evilMode|, |wordLength| and |guesses|
 - (void)loadSettings;
+
+// Called by -startNewGameButtonPressed to actually initialize a new
+// game object with the latest settings
 - (void)newGame;
 
-// Performs actions after game over (e.g. show highscores)
+// Performs actions after game over. Manages the updating of the
+// high scores and shows appropriate alerts to the player.
 - (void)endGame;
 
 @end

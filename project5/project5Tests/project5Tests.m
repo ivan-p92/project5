@@ -10,10 +10,12 @@
 #import "EvilGameplay.h"
 #import "EquivalenceClass.h"
 #import "History.h"
+#import "GoodGameplay.h"
 
 @interface project5Tests ()
 
 @property (strong, nonatomic) EvilGameplay *evilGame;
+@property (strong, nonatomic) GoodGameplay *fairGame;
 @property (strong, nonatomic) EquivalenceClass *equivalenceClass;
 @property (strong, nonatomic) History *highscores;
 
@@ -135,7 +137,78 @@
     STAssertEquals(2, self.evilGame.currentGuess, @"Current number of wrong guesses doesn't match expected value");
 }
 
-- (void) testEquivalenceClass
+- (void)testGoodGameplay
+{
+    NSArray *words = [NSArray arrayWithObjects:
+                      @"BEAR",
+                      @"BOAR",
+                      @"DEER",
+                      @"DUCK",
+                      @"HARE",
+                      nil];
+    
+    self.fairGame = [[GoodGameplay alloc] initGameWithWords:words andGuesses:4];
+    
+    STAssertEqualObjects(nil, self.fairGame.words, @"Game word list not set to nil");
+    STAssertEquals(4, self.fairGame.guesses, @"Number of guesses not set correctly");
+    STAssertNotNil(self.fairGame.currentWord, @"No word was chosen at init");
+    STAssertEquals(0, self.fairGame.currentGuess, @"Number of wrong guesses after init isn't zero");
+    STAssertTrue([self.fairGame.guessedLetters isEqualToString:@""], @"Guessed letters doesn't equal empty string at init");
+    STAssertTrue([self.fairGame.currentProgress isEqualToString:@"----"], @"User progress doesn't equal four hyphens");
+    STAssertFalse(self.evilGame.playerWonGame, @"Player hasn't lost by default");
+    
+    // Override currentWord to DEER
+    self.fairGame.currentWord = @"DEER";
+    
+    // Play a round for letter D and check that the properties have expected values
+    STAssertTrue([self.fairGame playRoundForLetter:@"D"],@"Game not finished, should return YES");
+    STAssertTrue([self.fairGame.currentWord isEqualToString:@"DEER"], @"Current word should still be DEER");
+    STAssertEquals(3, self.fairGame.unknownLettersLeft, @"Number of unknown letters isn't equal to 3");
+    STAssertTrue([self.fairGame.guessedLetters isEqualToString:@"D"], @"Guessed letters should be equal to D");
+    STAssertTrue([self.fairGame.currentProgress isEqualToString:@"D---"], @"Current progress should be equal to D---");
+    STAssertEquals(0, self.fairGame.currentGuess, @"There was no wrong guess, so currentGuess should still be 0");
+    STAssertFalse(self.fairGame.playerWonGame, @"Player hasn't finished game yet so hasn't won yet");
+    
+    // Play a round for letter X and check that the properties have expected values
+    STAssertTrue([self.fairGame playRoundForLetter:@"X"],@"Game not finished, should return YES");
+    STAssertEquals(3, self.fairGame.unknownLettersLeft, @"Number of unknown letters isn't equal to 3");
+    STAssertTrue([self.fairGame.guessedLetters isEqualToString:@"DX"], @"Guessed letters should be equal to DX");
+    STAssertTrue([self.fairGame.currentProgress isEqualToString:@"D---"], @"Current progress should be equal to D---");
+    STAssertEquals(1, self.fairGame.currentGuess, @"There was 1 wrong guess, so currentGuess should now be 1");
+    STAssertFalse(self.fairGame.playerWonGame, @"Player hasn't finished game yet so hasn't won yet");
+    
+    // Play a round for letter E and check that the properties have expected values
+    STAssertTrue([self.fairGame playRoundForLetter:@"E"],@"Game not finished, should return YES");
+    STAssertEquals(1, self.fairGame.unknownLettersLeft, @"Number of unknown letters isn't equal to 1");
+    STAssertTrue([self.fairGame.guessedLetters isEqualToString:@"DXE"], @"Guessed letters should be equal to DXE");
+    STAssertTrue([self.fairGame.currentProgress isEqualToString:@"DEE-"], @"Current progress should be equal to DEE-");
+    STAssertEquals(1, self.fairGame.currentGuess, @"Wrong guesses should still be 1");
+    STAssertFalse(self.fairGame.playerWonGame, @"Player hasn't finished game yet so hasn't won yet");
+    
+    // Play a round for letter R and check that the properties have expected values
+    STAssertFalse([self.fairGame playRoundForLetter:@"R"],@"Game is finished, should return NO");
+    STAssertEquals(0, self.fairGame.unknownLettersLeft, @"Number of unknown letters isn't equal to 0");
+    STAssertTrue([self.fairGame.guessedLetters isEqualToString:@"DXER"], @"Guessed letters should be equal to DXER");
+    STAssertTrue([self.fairGame.currentProgress isEqualToString:@"DEER"], @"Current progress should be equal to DEER");
+    STAssertEquals(1, self.fairGame.currentGuess, @"Wrong guesses should still be 1");
+    STAssertTrue(self.fairGame.playerWonGame, @"Player should have won game");
+    
+    // Start a new game with just two allowed errors to check for correct
+    // end of game if user loses.
+    self.fairGame = [[GoodGameplay alloc] initGameWithWords:words andGuesses:2];
+    self.fairGame.currentWord = @"DEER";
+    
+    // Play two rounds with wrong letters. Only check after second round.
+    STAssertTrue([self.fairGame playRoundForLetter:@"X"], @"Game isn't finished yet, should return YES");
+    STAssertFalse([self.fairGame playRoundForLetter:@"Q"], @"Player lost so game is finished, should return NO");
+    STAssertEquals(4, self.fairGame.unknownLettersLeft, @"Number of unknown letters isn't equal to 4");
+    STAssertTrue([self.fairGame.guessedLetters isEqualToString:@"XQ"], @"Guessed letters should be equal to XQ");
+    STAssertTrue([self.fairGame.currentProgress isEqualToString:@"----"], @"Current progress should be equal to ----");
+    STAssertEquals(2, self.fairGame.currentGuess, @"Wrong guesses should be 2");
+    STAssertFalse(self.fairGame.playerWonGame, @"Player should have lost game");
+}
+
+- (void)testEquivalenceClass
 {
     // After initialization, the |classes| dictionary should not be nil
     self.equivalenceClass = [[EquivalenceClass alloc] init];
